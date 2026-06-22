@@ -15,19 +15,32 @@ services:
     ports: ["6379:6379"]
 
   api:
-    build: ../apps/api
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
     env_file: ../.env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-agentreplay}:${POSTGRES_PASSWORD:-agentreplay}@postgres:5432/${POSTGRES_DB:-agentreplay}
+      REDIS_URL: redis://redis:6379/0
+      API_CORS_ORIGINS: http://localhost:3000
     depends_on: [postgres, redis]
     ports: ["8000:8000"]
 
   worker:
-    build: ../apps/api
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
     command: ["python", "-m", "app.workers.main"]
     env_file: ../.env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-agentreplay}:${POSTGRES_PASSWORD:-agentreplay}@postgres:5432/${POSTGRES_DB:-agentreplay}
+      REDIS_URL: redis://redis:6379/0
     depends_on: [postgres, redis]
 
   web:
-    build: ../apps/web
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
     environment:
       VITE_API_URL: http://localhost:8000
     depends_on: [api]

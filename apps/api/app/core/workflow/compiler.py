@@ -95,7 +95,8 @@ def compile_graph(events: list[dict], session_id: str, graph_id: str | None = No
 
         if et == "network":
             net = e.get("network") or {}
-            nid = f"net{ni}"; ni += 1
+            nid = f"net{ni}"
+            ni += 1
             label = f"{net.get('method', '')} {net.get('path', '')} -> {net.get('status', '')}".strip()
             g.nodes.append(Node(nid, "network", label, e["stepIndex"], url=current_url, meta={"network": net}))
             if prev is not None:
@@ -104,18 +105,21 @@ def compile_graph(events: list[dict], session_id: str, graph_id: str | None = No
             continue
 
         if et == "error":
-            fid = f"fail{ni}"; ni += 1
+            fid = f"fail{ni}"
+            ni += 1
             msg = (e.get("payload") or {}).get("message", "Error")
             g.nodes.append(Node(fid, "failure", msg, e["stepIndex"], url=current_url))
             if prev is not None:
-                g.edges.append(Edge(f"e{ei}", prev.id, fid, "divergence")); ei += 1
+                g.edges.append(Edge(f"e{ei}", prev.id, fid, "divergence"))
+                ei += 1
             prev = g.nodes[-1]
             continue
 
         # state-producing event: navigation / click / input / assertion
         cmd = _command_for(e)
         route = _route(current_url)
-        sid = f"s{si}"; si += 1
+        sid = f"s{si}"
+        si += 1
         kind = "assertion" if et == "assertion" else "page-state"
         node = Node(
             sid, kind, _state_label(e, route), e["stepIndex"], url=current_url,
@@ -123,7 +127,8 @@ def compile_graph(events: list[dict], session_id: str, graph_id: str | None = No
         )
         g.nodes.append(node)
         if prev is not None and cmd is not None:
-            g.edges.append(Edge(f"e{ei}", prev.id, sid, "human-path", command=cmd, label=_edge_label(e))); ei += 1
+            g.edges.append(Edge(f"e{ei}", prev.id, sid, "human-path", command=cmd, label=_edge_label(e)))
+            ei += 1
         prev = node
 
     return g

@@ -3,8 +3,24 @@
   "version": "0.1.0",
   "description": "Lightweight browser recorder that captures clicks, input, navigation, network, console, a11y snapshots, and element metadata as a BrowserEvent stream.",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsx --test test/*.test.ts"
+  },
   "license": "MIT",
   "dependencies": {
     "@agentreplay/shared-types": "0.1.0"

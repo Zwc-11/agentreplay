@@ -1,0 +1,16 @@
+{
+  "sessionId": "calendar-demo",
+  "name": "Calendar - create an event",
+  "goal": "create a calendar event",
+  "events": [
+    {"sessionId":"calendar-demo","stepIndex":0,"eventType":"navigation","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:00Z","screenshotKey":"shot/calendar-demo/0.png"},
+    {"sessionId":"calendar-demo","stepIndex":1,"eventType":"click","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:01Z","target":{"selector":"#new-event","role":"button","text":"New event"}},
+    {"sessionId":"calendar-demo","stepIndex":2,"eventType":"click","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:02Z","target":{"selector":"#title","role":"textbox","label":"Event title"}},
+    {"sessionId":"calendar-demo","stepIndex":3,"eventType":"input","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:03Z","target":{"selector":"#title","role":"textbox","label":"Event title"},"payload":{"value":"Design review"}},
+    {"sessionId":"calendar-demo","stepIndex":4,"eventType":"click","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:04Z","target":{"selector":"#time","role":"textbox","label":"Start time"}},
+    {"sessionId":"calendar-demo","stepIndex":5,"eventType":"input","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:05Z","target":{"selector":"#time","role":"textbox","label":"Start time"},"payload":{"value":"14:00"}},
+    {"sessionId":"calendar-demo","stepIndex":6,"eventType":"click","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:06Z","target":{"selector":"#save","role":"button","text":"Save event"}},
+    {"sessionId":"calendar-demo","stepIndex":7,"eventType":"network","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:06Z","network":{"method":"POST","path":"/api/events","status":200,"latencyMs":81}},
+    {"sessionId":"calendar-demo","stepIndex":8,"eventType":"assertion","url":"https://demo-calendar.local/","timestamp":"2026-06-03T08:00:07Z","target":{"selector":".toast","text":"Event saved"}}
+  ]
+}

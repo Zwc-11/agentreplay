@@ -18,11 +18,13 @@ export type Metrics = {
 export type Summary = {
   category: string | null; summary: string; rootCause: string | null;
   githubIssue: { title: string; body: string } | null;
+  model?: string | null;
 };
 export type Comparison = { divergenceStep: number | null; nodes: GNode[]; edges: GEdge[] };
 export type Run = {
   id: string; workflowId: string; driver: string; status: string; success: boolean;
   agentCommands: Command[]; comparison: Comparison; metrics: Metrics; summary: Summary; generatedTest: string;
+  llmEnabled?: boolean;
 };
 
 export type BrowserEvent = {
@@ -30,4 +32,20 @@ export type BrowserEvent = {
   target?: any; network?: any; screenshotKey?: string; domSnapshotKey?: string; payload?: any;
 };
 
-export type DemoData = { workflow: WorkflowGraph; events: BrowserEvent[]; runs: { divergent: Run; scripted: Run } };
+export type WorkflowSummary = {
+  id: string; name: string; steps: number; runs: number; successRate: number | null;
+};
+export type DemoData = { workflow: WorkflowGraph; events: BrowserEvent[]; run: Run };
+export type RecordingImport = {
+  sessionId: string;
+  workflowId?: string;
+  name?: string;
+  goal?: string;
+  events: BrowserEvent[];
+};
+export type ImportResult = {
+  accepted: number;
+  sessionId: string;
+  workflowId: string;
+  workflow: WorkflowGraph;
+};

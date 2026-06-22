@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app import state
-from app.schemas.events import EventBatch
+from app.schemas.events import EventBatch, RecordingImport
 from app.services.pipeline import compile_session, ingest
 
 router = APIRouter(tags=["events"])
@@ -13,6 +13,22 @@ def ingest_batch(batch: EventBatch, sessionId: str = "session", name: str = "Wor
     events = [e.model_dump() for e in batch.events]
     accepted = ingest(state.store, sessionId, name, events)
     return {"accepted": accepted, "sessionId": sessionId}
+
+
+@router.post("/recordings:import")
+def import_recording(recording: RecordingImport) -> dict:
+    """Import a complete BrowserEvent recording and compile it into a workflow."""
+    workflow_id = recording.workflowId or recording.sessionId
+    events = [e.model_dump() for e in recording.events]
+    accepted = ingest(state.store, recording.sessionId, recording.name, events)
+    graph = compile_session(state.store, recording.sessionId, graph_id=workflow_id)
+    state.workflow_goals[workflow_id] = recording.goal
+    return {
+        "accepted": accepted,
+        "sessionId": recording.sessionId,
+        "workflowId": workflow_id,
+        "workflow": graph.to_dict(),
+    }
 
 
 @router.post("/sessions/{session_id}/compile")

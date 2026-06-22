@@ -6,7 +6,7 @@
 
 **Record a real web workflow once → compile it into a replayable simulator → run an agent against it → see exactly where the agent diverged.**
 
-[Architecture](docs/architecture.md) · [Event Schema](docs/event-schema.md) · [Workflow Graph](docs/workflow-graph.md) · [Evaluation](docs/evaluation.md) · [Deployment](docs/deployment.md) · [Roadmap](PLAN.md)
+[Architecture](docs/architecture.md) · [Event Schema](docs/event-schema.md) · [Workflow Graph](docs/workflow-graph.md) · [Evaluation](docs/evaluation.md) · [Deployment](docs/deployment.md) · [DeepSeek](docs/deepseek.md) · [Roadmap](PLAN.md)
 
 </div>
 
@@ -104,6 +104,21 @@ http://localhost:3000
 ```
 
 The dashboard ships with **demo mode** (seeded workflows) so the system is explorable without recording anything first. See [docs/local-setup.md](docs/local-setup.md) for development without Docker.
+
+To test real recording ingestion without Docker:
+
+```bash
+# terminal 1
+cd apps/api
+pip install -e ".[dev]"
+python -m uvicorn app.main:app --reload --port 8000
+
+# terminal 2, from the repo root
+npm install
+npm run dev -w @agentreplay/web
+```
+
+Open `http://localhost:3000`, click **Import Recording**, and choose `examples/demo-calendar/recordings/event.json`. See [docs/real-recordings.md](docs/real-recordings.md) for the SDK snippet, API import endpoint, and verification commands.
 
 ## Demo workflow
 

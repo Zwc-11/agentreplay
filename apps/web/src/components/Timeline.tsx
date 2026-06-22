@@ -5,16 +5,20 @@ import type { BrowserEvent } from "../lib/types";
 const TYPES = ["all", "click", "input", "navigation", "network", "assertion", "error"];
 
 function label(e: BrowserEvent): string {
-  if (e.eventType === "network") return `${e.network?.method} ${e.network?.path} → ${e.network?.status}`;
+  if (e.eventType === "network") return `${e.network?.method} ${e.network?.path} -> ${e.network?.status}`;
   if (e.eventType === "navigation") return e.url;
   const t = e.target || {};
   return t.label || t.text || t.selector || "";
 }
 
 export function Timeline({
-  events, step, onSelect,
+  events,
+  step,
+  onSelect,
 }: {
-  events: BrowserEvent[]; step: number; onSelect: (n: number) => void;
+  events: BrowserEvent[];
+  step: number;
+  onSelect: (n: number) => void;
 }) {
   const [filter, setFilter] = useState("all");
   const rows = [...events]
@@ -22,7 +26,7 @@ export function Timeline({
     .filter((e) => filter === "all" || e.eventType === filter);
 
   return (
-    <Card title="Timeline — DOM / Network / Logs">
+    <Card title="Timeline - DOM / Network / Logs">
       <div className="flex flex-wrap gap-1 mb-2">
         {TYPES.map((t) => (
           <button

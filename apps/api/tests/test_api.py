@@ -32,3 +32,55 @@ def test_run_and_fetch():
     fetched = client.get(f"/v1/runs/{run['id']}").json()
     assert fetched["id"] == run["id"]
     assert fetched["metrics"]["failure_category"] == "wrong-element"
+
+
+def test_import_recording_compiles_and_runs():
+    payload = {
+        "sessionId": "imported-smoke",
+        "workflowId": "imported-smoke",
+        "name": "Imported smoke workflow",
+        "goal": "confirm imported flow",
+        "events": [
+            {
+                "sessionId": "imported-smoke",
+                "stepIndex": 0,
+                "eventType": "navigation",
+                "url": "https://example.local/start",
+                "timestamp": "2026-06-22T20:00:00Z",
+            },
+            {
+                "sessionId": "imported-smoke",
+                "stepIndex": 1,
+                "eventType": "click",
+                "url": "https://example.local/start",
+                "timestamp": "2026-06-22T20:00:01Z",
+                "target": {"selector": "#confirm", "role": "button", "text": "Confirm"},
+            },
+            {
+                "sessionId": "imported-smoke",
+                "stepIndex": 2,
+                "eventType": "assertion",
+                "url": "https://example.local/start",
+                "timestamp": "2026-06-22T20:00:02Z",
+                "target": {"selector": ".done", "text": "Done"},
+            },
+        ],
+    }
+    imported = client.post("/v1/recordings:import", json=payload).json()
+    assert imported["workflowId"] == "imported-smoke"
+    assert len(imported["workflow"]["nodes"]) == 3
+
+    workflows = client.get("/v1/workflows").json()["workflows"]
+    assert any(w["id"] == "imported-smoke" and w["name"] == "Imported smoke workflow" for w in workflows)
+
+    run = client.post("/v1/workflows/imported-smoke/runs?driver=scripted").json()
+    assert run["success"] is True
+    assert run["summary"]["summary"].startswith("Agent completed confirm imported flow")
+
+
+def test_import_recording_rejects_empty_events():
+    response = client.post(
+        "/v1/recordings:import",
+        json={"sessionId": "empty-import", "name": "Empty import", "events": []},
+    )
+    assert response.status_code == 422

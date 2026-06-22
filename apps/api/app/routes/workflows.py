@@ -15,12 +15,19 @@ def list_workflows() -> dict:
 
 
 @router.get("/demo")
-def demo() -> dict:
-    """One-shot payload for the dashboard's demo mode: the workflow + a divergent run."""
+def demo(workflow_id: str = state.WORKFLOW_ID) -> dict:
+    """One-shot payload for the dashboard: workflow + events + a divergent run."""
     state.seed()
-    graph = state.store.get_graph(state.WORKFLOW_ID)
-    run = run_agent(state.store, state.WORKFLOW_ID, "divergent", goal="complete a checkout")
-    return {"workflow": graph.to_dict(), "run": run}
+    graph = state.store.get_graph(workflow_id)
+    if graph is None:
+        raise HTTPException(404, "workflow not found")
+    session_id = state.store.graph_session[workflow_id]
+    run = run_agent(state.store, workflow_id, "divergent", goal=state.goal_for_workflow(workflow_id))
+    return {
+        "workflow": graph.to_dict(),
+        "events": state.store.load_events(session_id),
+        "run": run,
+    }
 
 
 @router.get("/workflows/{workflow_id}/graph")
@@ -30,6 +37,16 @@ def get_graph(workflow_id: str) -> dict:
     if graph is None:
         raise HTTPException(404, "workflow not found")
     return graph.to_dict()
+
+
+@router.get("/workflows/{workflow_id}/events")
+def get_events(workflow_id: str) -> dict:
+    state.seed()
+    graph = state.store.get_graph(workflow_id)
+    if graph is None:
+        raise HTTPException(404, "workflow not found")
+    session_id = state.store.graph_session[workflow_id]
+    return {"workflowId": workflow_id, "events": state.store.load_events(session_id)}
 
 
 @router.get("/workflows/{workflow_id}/test")

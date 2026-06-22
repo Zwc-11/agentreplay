@@ -12,14 +12,14 @@ class WorkflowTask:
     workflow_id: str
     goal: str
     start_url: str
-    human_commands: list = field(default_factory=list)  # list[Command]
+    human_commands: list[Command] = field(default_factory=list)
 
 
 @dataclass
 class AgentRunResult:
     driver_name: str
     success: bool
-    commands: list = field(default_factory=list)  # list[Command]
+    commands: list[Command] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {

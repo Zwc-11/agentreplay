@@ -1,8 +1,10 @@
 """Application orchestration: ingest -> compile -> run -> evaluate -> summarize."""
+
 from __future__ import annotations
 
 import uuid
 
+from app.adapters.llm.deepseek import get_default_client
 from app.adapters.llm.summary import generate_summary
 from app.adapters.playwright.drivers import get_driver
 from app.adapters.playwright.generator import generate_test
@@ -26,7 +28,9 @@ def compile_session(store, session_id: str, graph_id: str | None = None):
     return graph
 
 
-def run_agent(store, workflow_id: str, driver_name: str = "divergent", goal: str = "the workflow") -> dict:
+def run_agent(
+    store, workflow_id: str, driver_name: str = "divergent", goal: str = "the workflow"
+) -> dict:
     graph = store.get_graph(workflow_id)
     if graph is None:
         raise ValueError(f"unknown workflow: {workflow_id}")
@@ -34,7 +38,9 @@ def run_agent(store, workflow_id: str, driver_name: str = "divergent", goal: str
     human = graph.human_commands()
     session_id = store.graph_session[workflow_id]
     events = store.load_events(session_id)
-    network_events = [e["network"] for e in events if e["eventType"] == "network" and e.get("network")]
+    network_events = [
+        e["network"] for e in events if e["eventType"] == "network" and e.get("network")
+    ]
     start_url = next((c.url for c in human if c.kind == "goto"), None)
 
     task = WorkflowTask(workflow_id, goal, start_url, human)
@@ -42,10 +48,22 @@ def run_agent(store, workflow_id: str, driver_name: str = "divergent", goal: str
 
     last_step = max((e["stepIndex"] for e in events), default=0)
     snap = reconstruct_at(events, last_step)
-    metrics = compute_metrics(human, result.commands, result.success, network_events, snap["replayLatencyMs"])
+    metrics = compute_metrics(
+        human, result.commands, result.success, network_events, snap["replayLatencyMs"]
+    )
     comparison = build_comparison(graph, result.commands)
     test = generate_test(graph, test_name=goal)
-    summary = generate_summary(graph, human, result.commands, metrics, network_events, generated_test=test, goal=goal)
+    client = get_default_client()
+    summary = generate_summary(
+        graph,
+        human,
+        result.commands,
+        metrics,
+        network_events,
+        generated_test=test,
+        goal=goal,
+        client=client,
+    )
 
     run = {
         "id": str(uuid.uuid4()),
@@ -58,6 +76,7 @@ def run_agent(store, workflow_id: str, driver_name: str = "divergent", goal: str
         "metrics": metrics,
         "summary": summary,
         "generatedTest": test,
+        "llmEnabled": client is not None,
     }
     store.save_run(run)
     return run

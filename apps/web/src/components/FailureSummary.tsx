@@ -11,7 +11,7 @@ export function FailureSummary({ run }: { run: Run }) {
     : null;
 
   return (
-    <Card title="Failure Summary — root cause + AI">
+    <Card title="Failure Summary - root cause + AI">
       <div className="flex items-center gap-2 mb-2">
         <StatusBadge status={status} label={run.success ? "completed" : s.category ?? "failed"} />
         {run.metrics.divergence_step != null && (

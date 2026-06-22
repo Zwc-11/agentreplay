@@ -6,8 +6,7 @@ For development you can run each service directly. Prefer Docker (see [deploymen
 
 - Node.js 20+
 - Python 3.11+
-- PostgreSQL 15+ running locally
-- Redis 7+ running locally
+- PostgreSQL 15+ and Redis 7+ are only needed when you switch away from the default in-memory demo store
 
 ## 1. Environment
 
@@ -22,16 +21,10 @@ cp .env.example .env
 cd apps/api
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-# run migrations, then:
 uvicorn app.main:app --reload --port 8000
 ```
 
-Start the background worker (compiler + evaluator) in a second terminal:
-
-```bash
-cd apps/api && source .venv/bin/activate
-python -m app.workers.main
-```
+The API seeds the bundled demo recordings on startup. No database, Redis, migrations, or worker are required for the MVP flow.
 
 ## 3. Frontend (React dashboard)
 
@@ -47,7 +40,7 @@ The TypeScript packages (`recorder-sdk`, `playwright-generator`, `graph-core`, `
 
 ```bash
 npm install            # installs all workspace deps
-npm run build -w packages/shared-types
+npm run build -w @agentreplay/recorder-sdk
 ```
 
 ## 5. Playwright
@@ -58,22 +51,22 @@ cd apps/api && playwright install chromium
 
 ## 6. Demo data
 
-Seed the demo workflows so the dashboard has something to show:
+The demo workflows are loaded automatically from `examples/**/recordings/*.json`.
 
-```bash
-cd apps/api && python -m app.scripts.seed_demo
+To test real-data import, open the dashboard and choose **Import Recording**, then pick:
+
+```text
+examples/demo-calendar/recordings/event.json
 ```
+
+See [real-recordings.md](real-recordings.md) for the recorder SDK, import API, and E2E verification path.
 
 ## Tests
 
 ```bash
-# backend
-cd apps/api && pytest
-
-# frontend
-cd apps/web && npm test
-
-# end-to-end (AgentReplay testing itself with Playwright)
+npm run typecheck
+npm test
+npx playwright install chromium
 npm run test:e2e
 ```
 

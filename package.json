@@ -15,8 +15,14 @@
   "scripts": {
     "dev": "echo \"Run 'docker compose -f infra/docker-compose.yml up' or see docs/local-setup.md\"",
     "lint": "echo \"TODO: wire eslint + ruff\"",
-    "typecheck": "echo \"TODO: wire tsc + mypy\"",
-    "test": "echo \"TODO: wire frontend + backend tests\""
+    "typecheck": "npm run typecheck -w @agentreplay/recorder-sdk && npm run build -w @agentreplay/web",
+    "test": "npm run test -w @agentreplay/recorder-sdk && python -m pytest apps/api/tests",
+    "test:e2e": "playwright test"
   },
-  "packageManager": "npm@10.0.0"
+  "packageManager": "npm@10.0.0",
+  "devDependencies": {
+    "@playwright/test": "^1.61.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
 }

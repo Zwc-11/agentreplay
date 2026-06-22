@@ -1,0 +1,15 @@
+{
+  "sessionId": "checkout-flaky",
+  "name": "Checkout - flaky (500 then retry)",
+  "goal": "complete a flaky checkout",
+  "events": [
+    {"sessionId":"checkout-flaky","stepIndex":0,"eventType":"navigation","url":"https://demo-shop.local/checkout","timestamp":"2026-06-04T10:00:00Z","screenshotKey":"shot/checkout-flaky/0.png"},
+    {"sessionId":"checkout-flaky","stepIndex":1,"eventType":"click","url":"https://demo-shop.local/checkout","timestamp":"2026-06-04T10:00:01Z","target":{"selector":"#place-order","role":"button","text":"Place order"}},
+    {"sessionId":"checkout-flaky","stepIndex":2,"eventType":"network","url":"https://demo-shop.local/checkout","timestamp":"2026-06-04T10:00:01Z","network":{"method":"POST","path":"/api/checkout","status":500,"latencyMs":540}},
+    {"sessionId":"checkout-flaky","stepIndex":3,"eventType":"error","url":"https://demo-shop.local/checkout","timestamp":"2026-06-04T10:00:02Z","payload":{"message":"Checkout failed (500) - order not placed"}},
+    {"sessionId":"checkout-flaky","stepIndex":4,"eventType":"click","url":"https://demo-shop.local/checkout","timestamp":"2026-06-04T10:00:05Z","target":{"selector":"#place-order","role":"button","text":"Place order"}},
+    {"sessionId":"checkout-flaky","stepIndex":5,"eventType":"network","url":"https://demo-shop.local/checkout","timestamp":"2026-06-04T10:00:05Z","network":{"method":"POST","path":"/api/checkout","status":200,"latencyMs":210}},
+    {"sessionId":"checkout-flaky","stepIndex":6,"eventType":"navigation","url":"https://demo-shop.local/success","timestamp":"2026-06-04T10:00:06Z","screenshotKey":"shot/checkout-flaky/6.png"},
+    {"sessionId":"checkout-flaky","stepIndex":7,"eventType":"assertion","url":"https://demo-shop.local/success","timestamp":"2026-06-04T10:00:07Z","target":{"selector":".confirmation","text":"Order confirmed"}}
+  ]
+}
