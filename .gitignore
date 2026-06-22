@@ -31,7 +31,7 @@ playwright-report/
 test-results/
 
 # Object storage (local dev) & artifacts
-storage/
+/storage/
 snapshots/
 *.log
 
