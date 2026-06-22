@@ -1,0 +1,22 @@
+{
+  "name": "agentreplay",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A browser workflow flight recorder for AI agents: record web workflows, compile them into graphs, run agents against them, and surface where they diverge.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zwc-11/agentreplay.git"
+  },
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "echo \"Run 'docker compose -f infra/docker-compose.yml up' or see docs/local-setup.md\"",
+    "lint": "echo \"TODO: wire eslint + ruff\"",
+    "typecheck": "echo \"TODO: wire tsc + mypy\"",
+    "test": "echo \"TODO: wire frontend + backend tests\""
+  },
+  "packageManager": "npm@10.0.0"
+}

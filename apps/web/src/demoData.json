@@ -1,0 +1,952 @@
+{
+  "workflow": {
+    "id": "demo-checkout",
+    "sessionId": "checkout-demo",
+    "nodes": [
+      {
+        "id": "s0",
+        "kind": "page-state",
+        "label": "Login",
+        "stepIndex": 0,
+        "url": "https://demo-shop.local/login",
+        "screenshotKey": "shot/checkout-demo/0.png",
+        "domSnapshotKey": "dom/checkout-demo/0.json"
+      },
+      {
+        "id": "s1",
+        "kind": "page-state",
+        "label": "Email focused",
+        "stepIndex": 1,
+        "url": "https://demo-shop.local/login"
+      },
+      {
+        "id": "s2",
+        "kind": "page-state",
+        "label": "Email filled",
+        "stepIndex": 2,
+        "url": "https://demo-shop.local/login"
+      },
+      {
+        "id": "s3",
+        "kind": "page-state",
+        "label": "Password focused",
+        "stepIndex": 3,
+        "url": "https://demo-shop.local/login"
+      },
+      {
+        "id": "s4",
+        "kind": "page-state",
+        "label": "Password filled",
+        "stepIndex": 4,
+        "url": "https://demo-shop.local/login"
+      },
+      {
+        "id": "s5",
+        "kind": "page-state",
+        "label": "Sign in clicked",
+        "stepIndex": 5,
+        "url": "https://demo-shop.local/login"
+      },
+      {
+        "id": "net0",
+        "kind": "network",
+        "label": "POST /api/session -> 200",
+        "stepIndex": 6,
+        "url": "https://demo-shop.local/login",
+        "meta": {
+          "network": {
+            "method": "POST",
+            "path": "/api/session",
+            "status": 200,
+            "latencyMs": 142
+          }
+        }
+      },
+      {
+        "id": "s6",
+        "kind": "page-state",
+        "label": "Dashboard",
+        "stepIndex": 7,
+        "url": "https://demo-shop.local/dashboard",
+        "screenshotKey": "shot/checkout-demo/7.png",
+        "domSnapshotKey": "dom/checkout-demo/7.json"
+      },
+      {
+        "id": "s7",
+        "kind": "page-state",
+        "label": "Search products focused",
+        "stepIndex": 8,
+        "url": "https://demo-shop.local/dashboard"
+      },
+      {
+        "id": "s8",
+        "kind": "page-state",
+        "label": "Search products filled",
+        "stepIndex": 9,
+        "url": "https://demo-shop.local/dashboard"
+      },
+      {
+        "id": "s9",
+        "kind": "page-state",
+        "label": "Search clicked",
+        "stepIndex": 10,
+        "url": "https://demo-shop.local/dashboard"
+      },
+      {
+        "id": "net1",
+        "kind": "network",
+        "label": "GET /api/products?q=wireless+headphones -> 200",
+        "stepIndex": 11,
+        "url": "https://demo-shop.local/dashboard",
+        "meta": {
+          "network": {
+            "method": "GET",
+            "path": "/api/products?q=wireless+headphones",
+            "status": 200,
+            "latencyMs": 88
+          }
+        }
+      },
+      {
+        "id": "s10",
+        "kind": "page-state",
+        "label": "Search",
+        "stepIndex": 12,
+        "url": "https://demo-shop.local/search",
+        "screenshotKey": "shot/checkout-demo/12.png",
+        "domSnapshotKey": "dom/checkout-demo/12.json"
+      },
+      {
+        "id": "s11",
+        "kind": "page-state",
+        "label": "Add to cart clicked",
+        "stepIndex": 13,
+        "url": "https://demo-shop.local/search"
+      },
+      {
+        "id": "net2",
+        "kind": "network",
+        "label": "POST /api/cart -> 200",
+        "stepIndex": 14,
+        "url": "https://demo-shop.local/search",
+        "meta": {
+          "network": {
+            "method": "POST",
+            "path": "/api/cart",
+            "status": 200,
+            "latencyMs": 73
+          }
+        }
+      },
+      {
+        "id": "s12",
+        "kind": "page-state",
+        "label": "Checkout clicked",
+        "stepIndex": 15,
+        "url": "https://demo-shop.local/search"
+      },
+      {
+        "id": "s13",
+        "kind": "page-state",
+        "label": "Checkout",
+        "stepIndex": 16,
+        "url": "https://demo-shop.local/checkout",
+        "screenshotKey": "shot/checkout-demo/16.png",
+        "domSnapshotKey": "dom/checkout-demo/16.json"
+      },
+      {
+        "id": "s14",
+        "kind": "page-state",
+        "label": "Place order clicked",
+        "stepIndex": 17,
+        "url": "https://demo-shop.local/checkout"
+      },
+      {
+        "id": "net3",
+        "kind": "network",
+        "label": "POST /api/checkout -> 200",
+        "stepIndex": 18,
+        "url": "https://demo-shop.local/checkout",
+        "meta": {
+          "network": {
+            "method": "POST",
+            "path": "/api/checkout",
+            "status": 200,
+            "latencyMs": 206
+          }
+        }
+      },
+      {
+        "id": "s15",
+        "kind": "page-state",
+        "label": "Success",
+        "stepIndex": 19,
+        "url": "https://demo-shop.local/success",
+        "screenshotKey": "shot/checkout-demo/19.png",
+        "domSnapshotKey": "dom/checkout-demo/19.json"
+      },
+      {
+        "id": "s16",
+        "kind": "assertion",
+        "label": "Assert: Order confirmed",
+        "stepIndex": 20,
+        "url": "https://demo-shop.local/success"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e0",
+        "source": "s0",
+        "target": "s1",
+        "kind": "human-path",
+        "command": {
+          "kind": "click",
+          "selector": "#email",
+          "role": "textbox",
+          "name": "Email"
+        },
+        "label": "click Email"
+      },
+      {
+        "id": "e1",
+        "source": "s1",
+        "target": "s2",
+        "kind": "human-path",
+        "command": {
+          "kind": "fill",
+          "selector": "#email",
+          "role": "textbox",
+          "name": "Email",
+          "value": "demo@shop.test"
+        },
+        "label": "type Email"
+      },
+      {
+        "id": "e2",
+        "source": "s2",
+        "target": "s3",
+        "kind": "human-path",
+        "command": {
+          "kind": "click",
+          "selector": "#password",
+          "role": "textbox",
+          "name": "Password"
+        },
+        "label": "click Password"
+      },
+      {
+        "id": "e3",
+        "source": "s3",
+        "target": "s4",
+        "kind": "human-path",
+        "command": {
+          "kind": "fill",
+          "selector": "#password",
+          "role": "textbox",
+          "name": "Password",
+          "value": "hunter2"
+        },
+        "label": "type Password"
+      },
+      {
+        "id": "e4",
+        "source": "s4",
+        "target": "s5",
+        "kind": "human-path",
+        "command": {
+          "kind": "click",
+          "selector": "button[type=submit]",
+          "role": "button",
+          "text": "Sign in"
+        },
+        "label": "click Sign in"
+      },
+      {
+        "id": "e5",
+        "source": "s5",
+        "target": "net0",
+        "kind": "network-dependency",
+        "label": "200"
+      },
+      {
+        "id": "e6",
+        "source": "s5",
+        "target": "s6",
+        "kind": "human-path",
+        "command": {
+          "kind": "goto",
+          "url": "https://demo-shop.local/dashboard"
+        },
+        "label": "goto https://demo-shop.local/dashboard"
+      },
+      {
+        "id": "e7",
+        "source": "s6",
+        "target": "s7",
+        "kind": "human-path",
+        "command": {
+          "kind": "click",
+          "selector": "#search",
+          "role": "searchbox",
+          "name": "Search products"
+        },
+        "label": "click Search products"
+      },
+      {
+        "id": "e8",
+        "source": "s7",
+        "target": "s8",
+        "kind": "human-path",
+        "command": {
+          "kind": "fill",
+          "selector": "#search",
+          "role": "searchbox",
+          "name": "Search products",
+          "value": "wireless headphones"
+        },
+        "label": "type Search products"
+      },
+      {
+        "id": "e9",
+        "source": "s8",
+        "target": "s9",
+        "kind": "human-path",
+        "command": {
+          "kind": "click",
+          "selector": "#search-btn",
+          "role": "button",
+          "text": "Search"
+        },
+        "label": "click Search"
+      },
+      {
+        "id": "e10",
+        "source": "s9",
+        "target": "net1",
+        "kind": "network-dependency",
+        "label": "200"
+      },
+      {
+        "id": "e11",
+        "source": "s9",
+        "target": "s10",
+        "kind": "human-path",
+        "command": {
+          "kind": "goto",
+          "url": "https://demo-shop.local/search"
+        },
+        "label": "goto https://demo-shop.local/search"
+      },
+      {
+        "id": "e12",
+        "source": "s10",
+        "target": "s11",
+        "kind": "human-path",
+        "command": {
+          "kind": "click",
+          "selector": ".product[data-id='aurora-1'] .add",
+          "role": "button",
+          "text": "Add to cart"
+        },
+        "label": "click Add to cart"
+      },
+      {
+        "id": "e13",
+        "source": "s11",
+        "target": "net2",
+        "kind": "network-dependency",
+        "label": "200"
+      },
+      {
+        "id": "e14",
+        "source": "s11",
+        "target": "s12",
+        "kind": "human-path",
+        "command": {
+          "kind": "click",
+          "selector": "#checkout",
+          "role": "link",
+          "text": "Checkout"
+        },
+        "label": "click Checkout"
+      },
+      {
+        "id": "e15",
+        "source": "s12",
+        "target": "s13",
+        "kind": "human-path",
+        "command": {
+          "kind": "goto",
+          "url": "https://demo-shop.local/checkout"
+        },
+        "label": "goto https://demo-shop.local/checkout"
+      },
+      {
+        "id": "e16",
+        "source": "s13",
+        "target": "s14",
+        "kind": "human-path",
+        "command": {
+          "kind": "click",
+          "selector": "#place-order",
+          "role": "button",
+          "text": "Place order"
+        },
+        "label": "click Place order"
+      },
+      {
+        "id": "e17",
+        "source": "s14",
+        "target": "net3",
+        "kind": "network-dependency",
+        "label": "200"
+      },
+      {
+        "id": "e18",
+        "source": "s14",
+        "target": "s15",
+        "kind": "human-path",
+        "command": {
+          "kind": "goto",
+          "url": "https://demo-shop.local/success"
+        },
+        "label": "goto https://demo-shop.local/success"
+      },
+      {
+        "id": "e19",
+        "source": "s15",
+        "target": "s16",
+        "kind": "human-path",
+        "command": {
+          "kind": "assertVisible",
+          "selector": ".confirmation",
+          "text": "Order confirmed"
+        },
+        "label": "assert Order confirmed"
+      }
+    ]
+  },
+  "events": [
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 0,
+      "eventType": "navigation",
+      "url": "https://demo-shop.local/login",
+      "timestamp": "2026-06-01T10:00:00Z",
+      "screenshotKey": "shot/checkout-demo/0.png",
+      "domSnapshotKey": "dom/checkout-demo/0.json"
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 1,
+      "eventType": "click",
+      "url": "https://demo-shop.local/login",
+      "timestamp": "2026-06-01T10:00:01Z",
+      "target": {
+        "selector": "#email",
+        "role": "textbox",
+        "label": "Email",
+        "bbox": {
+          "x": 480,
+          "y": 220,
+          "width": 320,
+          "height": 40
+        }
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 2,
+      "eventType": "input",
+      "url": "https://demo-shop.local/login",
+      "timestamp": "2026-06-01T10:00:02Z",
+      "target": {
+        "selector": "#email",
+        "role": "textbox",
+        "label": "Email"
+      },
+      "payload": {
+        "value": "demo@shop.test"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 3,
+      "eventType": "click",
+      "url": "https://demo-shop.local/login",
+      "timestamp": "2026-06-01T10:00:03Z",
+      "target": {
+        "selector": "#password",
+        "role": "textbox",
+        "label": "Password"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 4,
+      "eventType": "input",
+      "url": "https://demo-shop.local/login",
+      "timestamp": "2026-06-01T10:00:04Z",
+      "target": {
+        "selector": "#password",
+        "role": "textbox",
+        "label": "Password"
+      },
+      "payload": {
+        "value": "hunter2"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 5,
+      "eventType": "click",
+      "url": "https://demo-shop.local/login",
+      "timestamp": "2026-06-01T10:00:05Z",
+      "target": {
+        "selector": "button[type=submit]",
+        "role": "button",
+        "text": "Sign in"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 6,
+      "eventType": "network",
+      "url": "https://demo-shop.local/login",
+      "timestamp": "2026-06-01T10:00:05Z",
+      "network": {
+        "method": "POST",
+        "path": "/api/session",
+        "status": 200,
+        "latencyMs": 142
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 7,
+      "eventType": "navigation",
+      "url": "https://demo-shop.local/dashboard",
+      "timestamp": "2026-06-01T10:00:06Z",
+      "screenshotKey": "shot/checkout-demo/7.png",
+      "domSnapshotKey": "dom/checkout-demo/7.json"
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 8,
+      "eventType": "click",
+      "url": "https://demo-shop.local/dashboard",
+      "timestamp": "2026-06-01T10:00:07Z",
+      "target": {
+        "selector": "#search",
+        "role": "searchbox",
+        "label": "Search products"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 9,
+      "eventType": "input",
+      "url": "https://demo-shop.local/dashboard",
+      "timestamp": "2026-06-01T10:00:08Z",
+      "target": {
+        "selector": "#search",
+        "role": "searchbox",
+        "label": "Search products"
+      },
+      "payload": {
+        "value": "wireless headphones"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 10,
+      "eventType": "click",
+      "url": "https://demo-shop.local/dashboard",
+      "timestamp": "2026-06-01T10:00:09Z",
+      "target": {
+        "selector": "#search-btn",
+        "role": "button",
+        "text": "Search"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 11,
+      "eventType": "network",
+      "url": "https://demo-shop.local/dashboard",
+      "timestamp": "2026-06-01T10:00:09Z",
+      "network": {
+        "method": "GET",
+        "path": "/api/products?q=wireless+headphones",
+        "status": 200,
+        "latencyMs": 88
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 12,
+      "eventType": "navigation",
+      "url": "https://demo-shop.local/search",
+      "timestamp": "2026-06-01T10:00:10Z",
+      "screenshotKey": "shot/checkout-demo/12.png",
+      "domSnapshotKey": "dom/checkout-demo/12.json"
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 13,
+      "eventType": "click",
+      "url": "https://demo-shop.local/search",
+      "timestamp": "2026-06-01T10:00:11Z",
+      "target": {
+        "selector": ".product[data-id='aurora-1'] .add",
+        "role": "button",
+        "text": "Add to cart"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 14,
+      "eventType": "network",
+      "url": "https://demo-shop.local/search",
+      "timestamp": "2026-06-01T10:00:11Z",
+      "network": {
+        "method": "POST",
+        "path": "/api/cart",
+        "status": 200,
+        "latencyMs": 73
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 15,
+      "eventType": "click",
+      "url": "https://demo-shop.local/search",
+      "timestamp": "2026-06-01T10:00:12Z",
+      "target": {
+        "selector": "#checkout",
+        "role": "link",
+        "text": "Checkout"
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 16,
+      "eventType": "navigation",
+      "url": "https://demo-shop.local/checkout",
+      "timestamp": "2026-06-01T10:00:13Z",
+      "screenshotKey": "shot/checkout-demo/16.png",
+      "domSnapshotKey": "dom/checkout-demo/16.json"
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 17,
+      "eventType": "click",
+      "url": "https://demo-shop.local/checkout",
+      "timestamp": "2026-06-01T10:00:14Z",
+      "target": {
+        "selector": "#place-order",
+        "role": "button",
+        "text": "Place order",
+        "bbox": {
+          "x": 520,
+          "y": 640,
+          "width": 200,
+          "height": 48
+        }
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 18,
+      "eventType": "network",
+      "url": "https://demo-shop.local/checkout",
+      "timestamp": "2026-06-01T10:00:14Z",
+      "network": {
+        "method": "POST",
+        "path": "/api/checkout",
+        "status": 200,
+        "latencyMs": 206
+      }
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 19,
+      "eventType": "navigation",
+      "url": "https://demo-shop.local/success",
+      "timestamp": "2026-06-01T10:00:15Z",
+      "screenshotKey": "shot/checkout-demo/19.png",
+      "domSnapshotKey": "dom/checkout-demo/19.json"
+    },
+    {
+      "sessionId": "checkout-demo",
+      "stepIndex": 20,
+      "eventType": "assertion",
+      "url": "https://demo-shop.local/success",
+      "timestamp": "2026-06-01T10:00:16Z",
+      "target": {
+        "selector": ".confirmation",
+        "text": "Order confirmed"
+      }
+    }
+  ],
+  "runs": {
+    "divergent": {
+      "id": "demo-divergent",
+      "workflowId": "demo-checkout",
+      "driver": "divergent",
+      "status": "completed",
+      "success": false,
+      "agentCommands": [
+        {
+          "kind": "click",
+          "selector": "#email",
+          "role": "textbox",
+          "name": "Email"
+        },
+        {
+          "kind": "fill",
+          "selector": "#email",
+          "role": "textbox",
+          "name": "Email",
+          "value": "demo@shop.test"
+        },
+        {
+          "kind": "click",
+          "selector": "#password",
+          "role": "textbox",
+          "name": "Password"
+        },
+        {
+          "kind": "fill",
+          "selector": "#password",
+          "role": "textbox",
+          "name": "Password",
+          "value": "hunter2"
+        },
+        {
+          "kind": "click",
+          "selector": "button[type=submit]",
+          "role": "button",
+          "text": "Sign in"
+        },
+        {
+          "kind": "goto",
+          "url": "https://demo-shop.local/dashboard"
+        },
+        {
+          "kind": "click",
+          "selector": "#search",
+          "role": "searchbox",
+          "name": "Search products"
+        },
+        {
+          "kind": "fill",
+          "selector": "#search",
+          "role": "searchbox",
+          "name": "Search products",
+          "value": "wireless headphones"
+        },
+        {
+          "kind": "click",
+          "selector": "#search-btn",
+          "role": "button",
+          "text": "Search"
+        },
+        {
+          "kind": "goto",
+          "url": "https://demo-shop.local/search"
+        },
+        {
+          "kind": "click",
+          "selector": ".product[data-id='aurora-1'] .add",
+          "role": "button",
+          "text": "Add to cart"
+        },
+        {
+          "kind": "click",
+          "selector": "#checkout",
+          "role": "link",
+          "text": "Checkout"
+        },
+        {
+          "kind": "goto",
+          "url": "https://demo-shop.local/checkout"
+        },
+        {
+          "kind": "click",
+          "selector": ".promo-ad",
+          "role": "link",
+          "name": "Special offer"
+        }
+      ],
+      "comparison": {
+        "divergenceStep": 13,
+        "nodes": [
+          {
+            "id": "a13",
+            "kind": "agent-action",
+            "label": "click Special offer",
+            "stepIndex": 16,
+            "url": "https://demo-shop.local/checkout"
+          }
+        ],
+        "edges": [
+          {
+            "id": "ae13",
+            "source": "s13",
+            "target": "a13",
+            "kind": "divergence",
+            "command": {
+              "kind": "click",
+              "selector": ".promo-ad",
+              "role": "link",
+              "name": "Special offer"
+            },
+            "label": "click Special offer"
+          }
+        ]
+      },
+      "metrics": {
+        "task_success": false,
+        "step_accuracy": 0.8125,
+        "wrong_click_count": 1,
+        "divergence_step": 13,
+        "recovered": false,
+        "network_caused_failure": false,
+        "failure_category": "wrong-element",
+        "replay_latency_ms": 0
+      },
+      "summary": {
+        "category": "wrong-element",
+        "summary": "The agent diverged at step 14 of 16. It was expected to click \"Place order\", but instead chose to click \"Special offer\". The agent selected a lookalike or incorrect element instead of the intended control. Step accuracy 81%, 1 wrong action(s); recovered: no.",
+        "rootCause": "The agent selected a lookalike or incorrect element instead of the intended control.",
+        "githubIssue": {
+          "title": "Agent diverged at step 14 (wrong-element) in complete a checkout",
+          "body": "## Agent divergence in complete a checkout\n\n**Category:** wrong-element\n\n**First divergence:** step 14 of 16\n\n- Expected: click \"Place order\"\n- Actual: click \"Special offer\"\n\nThe agent selected a lookalike or incorrect element instead of the intended control.\n\n**Metrics:** Step accuracy 81%, 1 wrong action(s); recovered: no.\n\n### Reproduce with the generated Playwright test\n\n```ts\nimport { test, expect } from \"@playwright/test\";\n\ntest(\"complete a checkout\", async ({ page }) => {\n  await page.getByRole(\"textbox\", { name: \"Email\" }).click();\n  await page.getByRole(\"textbox\", { name: \"Email\" }).fill(\"demo@shop.test\");\n  await page.getByRole(\"textbox\", { name: \"Password\" }).click();\n  await page.getByRole(\"textbox\", { name: \"Password\" }).fill(\"hunter2\");\n  await page.getByRole(\"button\", { name: \"Sign in\" }).click();\n  await page.goto(\"https://demo-shop.local/dashboard\");\n  await page.getByRole(\"searchbox\", { name: \"Search products\" }).click();\n  await page.getByRole(\"searchbox\", { name: \"Search products\" }).fill(\"wireless headphones\");\n  await page.getByRole(\"button\", { name: \"Search\" }).click();\n  await page.goto(\"https://demo-shop.local/search\");\n  await page.getByRole(\"button\", { name: \"Add to cart\" }).click();\n  await page.getByRole(\"link\", { name: \"Checkout\" }).click();\n  await page.goto(\"https://demo-shop.local/checkout\");\n  await page.getByRole(\"button\", { name: \"Place order\" }).click();\n  await page.goto(\"https://demo-shop.local/success\");\n  await expect(page.getByText(\"Order confirmed\")).toBeVisible();\n});\n```\n"
+        }
+      },
+      "generatedTest": "import { test, expect } from \"@playwright/test\";\n\ntest(\"complete a checkout\", async ({ page }) => {\n  await page.getByRole(\"textbox\", { name: \"Email\" }).click();\n  await page.getByRole(\"textbox\", { name: \"Email\" }).fill(\"demo@shop.test\");\n  await page.getByRole(\"textbox\", { name: \"Password\" }).click();\n  await page.getByRole(\"textbox\", { name: \"Password\" }).fill(\"hunter2\");\n  await page.getByRole(\"button\", { name: \"Sign in\" }).click();\n  await page.goto(\"https://demo-shop.local/dashboard\");\n  await page.getByRole(\"searchbox\", { name: \"Search products\" }).click();\n  await page.getByRole(\"searchbox\", { name: \"Search products\" }).fill(\"wireless headphones\");\n  await page.getByRole(\"button\", { name: \"Search\" }).click();\n  await page.goto(\"https://demo-shop.local/search\");\n  await page.getByRole(\"button\", { name: \"Add to cart\" }).click();\n  await page.getByRole(\"link\", { name: \"Checkout\" }).click();\n  await page.goto(\"https://demo-shop.local/checkout\");\n  await page.getByRole(\"button\", { name: \"Place order\" }).click();\n  await page.goto(\"https://demo-shop.local/success\");\n  await expect(page.getByText(\"Order confirmed\")).toBeVisible();\n});\n"
+    },
+    "scripted": {
+      "id": "demo-scripted",
+      "workflowId": "demo-checkout",
+      "driver": "scripted",
+      "status": "completed",
+      "success": true,
+      "agentCommands": [
+        {
+          "kind": "click",
+          "selector": "#email",
+          "role": "textbox",
+          "name": "Email"
+        },
+        {
+          "kind": "fill",
+          "selector": "#email",
+          "role": "textbox",
+          "name": "Email",
+          "value": "demo@shop.test"
+        },
+        {
+          "kind": "click",
+          "selector": "#password",
+          "role": "textbox",
+          "name": "Password"
+        },
+        {
+          "kind": "fill",
+          "selector": "#password",
+          "role": "textbox",
+          "name": "Password",
+          "value": "hunter2"
+        },
+        {
+          "kind": "click",
+          "selector": "button[type=submit]",
+          "role": "button",
+          "text": "Sign in"
+        },
+        {
+          "kind": "goto",
+          "url": "https://demo-shop.local/dashboard"
+        },
+        {
+          "kind": "click",
+          "selector": "#search",
+          "role": "searchbox",
+          "name": "Search products"
+        },
+        {
+          "kind": "fill",
+          "selector": "#search",
+          "role": "searchbox",
+          "name": "Search products",
+          "value": "wireless headphones"
+        },
+        {
+          "kind": "click",
+          "selector": "#search-btn",
+          "role": "button",
+          "text": "Search"
+        },
+        {
+          "kind": "goto",
+          "url": "https://demo-shop.local/search"
+        },
+        {
+          "kind": "click",
+          "selector": ".product[data-id='aurora-1'] .add",
+          "role": "button",
+          "text": "Add to cart"
+        },
+        {
+          "kind": "click",
+          "selector": "#checkout",
+          "role": "link",
+          "text": "Checkout"
+        },
+        {
+          "kind": "goto",
+          "url": "https://demo-shop.local/checkout"
+        },
+        {
+          "kind": "click",
+          "selector": "#place-order",
+          "role": "button",
+          "text": "Place order"
+        },
+        {
+          "kind": "goto",
+          "url": "https://demo-shop.local/success"
+        },
+        {
+          "kind": "assertVisible",
+          "selector": ".confirmation",
+          "text": "Order confirmed"
+        }
+      ],
+      "comparison": {
+        "divergenceStep": null,
+        "nodes": [],
+        "edges": []
+      },
+      "metrics": {
+        "task_success": true,
+        "step_accuracy": 1.0,
+        "wrong_click_count": 0,
+        "divergence_step": null,
+        "recovered": false,
+        "network_caused_failure": false,
+        "failure_category": null,
+        "replay_latency_ms": 0
+      },
+      "summary": {
+        "category": null,
+        "summary": "Agent completed complete a checkout, matching the human path on all 16 steps. Task succeeded.",
+        "rootCause": null,
+        "githubIssue": null
+      },
+      "generatedTest": "import { test, expect } from \"@playwright/test\";\n\ntest(\"complete a checkout\", async ({ page }) => {\n  await page.getByRole(\"textbox\", { name: \"Email\" }).click();\n  await page.getByRole(\"textbox\", { name: \"Email\" }).fill(\"demo@shop.test\");\n  await page.getByRole(\"textbox\", { name: \"Password\" }).click();\n  await page.getByRole(\"textbox\", { name: \"Password\" }).fill(\"hunter2\");\n  await page.getByRole(\"button\", { name: \"Sign in\" }).click();\n  await page.goto(\"https://demo-shop.local/dashboard\");\n  await page.getByRole(\"searchbox\", { name: \"Search products\" }).click();\n  await page.getByRole(\"searchbox\", { name: \"Search products\" }).fill(\"wireless headphones\");\n  await page.getByRole(\"button\", { name: \"Search\" }).click();\n  await page.goto(\"https://demo-shop.local/search\");\n  await page.getByRole(\"button\", { name: \"Add to cart\" }).click();\n  await page.getByRole(\"link\", { name: \"Checkout\" }).click();\n  await page.goto(\"https://demo-shop.local/checkout\");\n  await page.getByRole(\"button\", { name: \"Place order\" }).click();\n  await page.goto(\"https://demo-shop.local/success\");\n  await expect(page.getByText(\"Order confirmed\")).toBeVisible();\n});\n"
+    }
+  }
+}

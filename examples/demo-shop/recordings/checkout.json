@@ -1,0 +1,28 @@
+{
+  "sessionId": "checkout-demo",
+  "name": "Checkout Demo",
+  "goal": "complete a checkout",
+  "events": [
+    {"sessionId":"checkout-demo","stepIndex":0,"eventType":"navigation","url":"https://demo-shop.local/login","timestamp":"2026-06-01T10:00:00Z","screenshotKey":"shot/checkout-demo/0.png","domSnapshotKey":"dom/checkout-demo/0.json"},
+    {"sessionId":"checkout-demo","stepIndex":1,"eventType":"click","url":"https://demo-shop.local/login","timestamp":"2026-06-01T10:00:01Z","target":{"selector":"#email","role":"textbox","label":"Email","bbox":{"x":480,"y":220,"width":320,"height":40}}},
+    {"sessionId":"checkout-demo","stepIndex":2,"eventType":"input","url":"https://demo-shop.local/login","timestamp":"2026-06-01T10:00:02Z","target":{"selector":"#email","role":"textbox","label":"Email"},"payload":{"value":"demo@shop.test"}},
+    {"sessionId":"checkout-demo","stepIndex":3,"eventType":"click","url":"https://demo-shop.local/login","timestamp":"2026-06-01T10:00:03Z","target":{"selector":"#password","role":"textbox","label":"Password"}},
+    {"sessionId":"checkout-demo","stepIndex":4,"eventType":"input","url":"https://demo-shop.local/login","timestamp":"2026-06-01T10:00:04Z","target":{"selector":"#password","role":"textbox","label":"Password"},"payload":{"value":"hunter2"}},
+    {"sessionId":"checkout-demo","stepIndex":5,"eventType":"click","url":"https://demo-shop.local/login","timestamp":"2026-06-01T10:00:05Z","target":{"selector":"button[type=submit]","role":"button","text":"Sign in"}},
+    {"sessionId":"checkout-demo","stepIndex":6,"eventType":"network","url":"https://demo-shop.local/login","timestamp":"2026-06-01T10:00:05Z","network":{"method":"POST","path":"/api/session","status":200,"latencyMs":142}},
+    {"sessionId":"checkout-demo","stepIndex":7,"eventType":"navigation","url":"https://demo-shop.local/dashboard","timestamp":"2026-06-01T10:00:06Z","screenshotKey":"shot/checkout-demo/7.png","domSnapshotKey":"dom/checkout-demo/7.json"},
+    {"sessionId":"checkout-demo","stepIndex":8,"eventType":"click","url":"https://demo-shop.local/dashboard","timestamp":"2026-06-01T10:00:07Z","target":{"selector":"#search","role":"searchbox","label":"Search products"}},
+    {"sessionId":"checkout-demo","stepIndex":9,"eventType":"input","url":"https://demo-shop.local/dashboard","timestamp":"2026-06-01T10:00:08Z","target":{"selector":"#search","role":"searchbox","label":"Search products"},"payload":{"value":"wireless headphones"}},
+    {"sessionId":"checkout-demo","stepIndex":10,"eventType":"click","url":"https://demo-shop.local/dashboard","timestamp":"2026-06-01T10:00:09Z","target":{"selector":"#search-btn","role":"button","text":"Search"}},
+    {"sessionId":"checkout-demo","stepIndex":11,"eventType":"network","url":"https://demo-shop.local/dashboard","timestamp":"2026-06-01T10:00:09Z","network":{"method":"GET","path":"/api/products?q=wireless+headphones","status":200,"latencyMs":88}},
+    {"sessionId":"checkout-demo","stepIndex":12,"eventType":"navigation","url":"https://demo-shop.local/search","timestamp":"2026-06-01T10:00:10Z","screenshotKey":"shot/checkout-demo/12.png","domSnapshotKey":"dom/checkout-demo/12.json"},
+    {"sessionId":"checkout-demo","stepIndex":13,"eventType":"click","url":"https://demo-shop.local/search","timestamp":"2026-06-01T10:00:11Z","target":{"selector":".product[data-id='aurora-1'] .add","role":"button","text":"Add to cart"}},
+    {"sessionId":"checkout-demo","stepIndex":14,"eventType":"network","url":"https://demo-shop.local/search","timestamp":"2026-06-01T10:00:11Z","network":{"method":"POST","path":"/api/cart","status":200,"latencyMs":73}},
+    {"sessionId":"checkout-demo","stepIndex":15,"eventType":"click","url":"https://demo-shop.local/search","timestamp":"2026-06-01T10:00:12Z","target":{"selector":"#checkout","role":"link","text":"Checkout"}},
+    {"sessionId":"checkout-demo","stepIndex":16,"eventType":"navigation","url":"https://demo-shop.local/checkout","timestamp":"2026-06-01T10:00:13Z","screenshotKey":"shot/checkout-demo/16.png","domSnapshotKey":"dom/checkout-demo/16.json"},
+    {"sessionId":"checkout-demo","stepIndex":17,"eventType":"click","url":"https://demo-shop.local/checkout","timestamp":"2026-06-01T10:00:14Z","target":{"selector":"#place-order","role":"button","text":"Place order","bbox":{"x":520,"y":640,"width":200,"height":48}}},
+    {"sessionId":"checkout-demo","stepIndex":18,"eventType":"network","url":"https://demo-shop.local/checkout","timestamp":"2026-06-01T10:00:14Z","network":{"method":"POST","path":"/api/checkout","status":200,"latencyMs":206}},
+    {"sessionId":"checkout-demo","stepIndex":19,"eventType":"navigation","url":"https://demo-shop.local/success","timestamp":"2026-06-01T10:00:15Z","screenshotKey":"shot/checkout-demo/19.png","domSnapshotKey":"dom/checkout-demo/19.json"},
+    {"sessionId":"checkout-demo","stepIndex":20,"eventType":"assertion","url":"https://demo-shop.local/success","timestamp":"2026-06-01T10:00:16Z","target":{"selector":".confirmation","text":"Order confirmed"}}
+  ]
+}

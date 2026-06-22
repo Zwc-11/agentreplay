@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-agentreplay}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-agentreplay}
+      POSTGRES_DB: ${POSTGRES_DB:-agentreplay}
+    ports: ["5432:5432"]
+    volumes:
+      - ../apps/api/migrations:/docker-entrypoint-initdb.d:ro
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+
+  api:
+    build: ../apps/api
+    env_file: ../.env
+    depends_on: [postgres, redis]
+    ports: ["8000:8000"]
+
+  worker:
+    build: ../apps/api
+    command: ["python", "-m", "app.workers.main"]
+    env_file: ../.env
+    depends_on: [postgres, redis]
+
+  web:
+    build: ../apps/web
+    environment:
+      VITE_API_URL: http://localhost:8000
+    depends_on: [api]
+    ports: ["3000:3000"]
+
+volumes:
+  pgdata:
