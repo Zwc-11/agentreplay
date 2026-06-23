@@ -12,7 +12,7 @@
 ![Python](https://img.shields.io/badge/python-3.11%2B-3776ab)
 ![Node](https://img.shields.io/badge/node-20%2B-3c873a)
 
-[Live demo](https://zwc-11.github.io/agentreplay/) | [Architecture](docs/architecture.md) | [Event Schema](docs/event-schema.md) | [Workflow Graph](docs/workflow-graph.md) | [Evaluation](docs/evaluation.md) | [Deployment](docs/deployment.md) | [DeepSeek](docs/deepseek.md) | [Roadmap](PLAN.md)
+[Architecture](docs/architecture.md) | [Event Schema](docs/event-schema.md) | [Workflow Graph](docs/workflow-graph.md) | [Evaluation](docs/evaluation.md) | [Deployment](docs/deployment.md) | [DeepSeek](docs/deepseek.md) | [Roadmap](PLAN.md)
 
 </div>
 
