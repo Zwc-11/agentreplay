@@ -5,4 +5,6 @@ export { StatusBadge } from "./StatusBadge";
 export { CodeBlock } from "./CodeBlock";
 export { Tabs } from "./Tabs";
 export { GraphLegend } from "./GraphLegend";
+export { Logo } from "./Logo";
+export { AppBar } from "./AppBar";
 export * from "./tokens";

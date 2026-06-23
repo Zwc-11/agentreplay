@@ -23,7 +23,7 @@ Open the dashboard at `http://localhost:3000`. The dashboard includes **demo mod
 
 ## Configuration
 
-All configuration is via environment variables — see [`.env.example`](../.env.example). Key groups: database (`DATABASE_URL`), queue (`REDIS_URL`), object storage (`STORAGE_BACKEND`, `STORAGE_DIR`, or S3/R2 keys), and LLM (`OPENAI_API_KEY`, used only for summaries).
+All configuration is via environment variables. See [`.env.example`](../.env.example). Key groups: database (`DATABASE_URL`), queue (`REDIS_URL`), object storage (`STORAGE_BACKEND`, `STORAGE_DIR`, or S3/R2 keys), and LLM settings (`DEEPSEEK_API_KEY`, used only when the LLM driver or model-backed summaries are enabled).
 
 ## Hosted demo
 
@@ -45,3 +45,37 @@ Point the frontend at the API with `VITE_API_URL`.
 ## CI/CD
 
 GitHub Actions (`.github/workflows/ci.yml`) runs lint, typecheck, backend tests, frontend tests, Playwright e2e, and a Docker build on every push/PR. A deploy workflow can promote `main` to the hosting providers above.
+
+## Hosted demo & deploy targets
+
+Because the dashboard is **offline-first** (it bundles a demo fixture and falls back to it when the API is unreachable), you can publish a fully interactive demo with **no backend at all**.
+
+### GitHub Pages (zero backend, recommended for the demo)
+
+`.github/workflows/deploy-pages.yml` builds the dashboard and publishes it. Enable Pages once (Settings → Pages → Source: GitHub Actions). Every push to `main` then updates:
+
+```
+https://zwc-11.github.io/agentreplay/
+```
+
+The build sets `VITE_BASE=/agentreplay/` so asset paths resolve under the project path.
+
+### Vercel (web)
+
+`vercel.json` builds `apps/web` to `apps/web/dist`. Import the repo in Vercel — no config needed.
+
+### Render (API + web)
+
+`render.yaml` is a Render blueprint: the API as a Docker service (health-checked at `/health`) and the dashboard as a static site wired to it via `VITE_API_URL`. Point Render at the repo and it provisions both.
+
+### Object storage
+
+Screenshots and DOM snapshots are stored via the object-storage adapter (`STORAGE_DIR`, filesystem by default) and served at `GET /v1/blobs/{key}`. Live recordings (`python -m app.scripts.record` / `live`) capture real screenshots; the replay panel loads them and falls back to a placeholder when a blob is absent. Swap in S3/R2 behind the same `ObjectStore` interface for shared/hosted environments.
+
+### Persistence
+
+The default in-memory store needs no database. For durable data set `STORE_BACKEND=postgres` and `DATABASE_URL`; the `PostgresStore` creates its own JSONB tables on first use.
+
+### End-to-end check
+
+`npm run test:e2e` builds the dashboard and runs Playwright against it offline (no API needed). See `tests/e2e/dashboard.spec.ts`.

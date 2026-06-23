@@ -14,9 +14,9 @@
   ],
   "scripts": {
     "dev": "echo \"Run 'docker compose -f infra/docker-compose.yml up' or see docs/local-setup.md\"",
-    "lint": "echo \"TODO: wire eslint + ruff\"",
-    "typecheck": "npm run typecheck -w @agentreplay/recorder-sdk && npm run build -w @agentreplay/web",
-    "test": "npm run test -w @agentreplay/recorder-sdk && python -m pytest apps/api/tests",
+    "lint": "ruff check apps/api",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present && python -m pytest apps/api/tests",
     "test:e2e": "playwright test"
   },
   "packageManager": "npm@10.0.0",

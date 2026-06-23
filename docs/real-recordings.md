@@ -96,3 +96,38 @@ npm run test:e2e
 ```
 
 The E2E smoke test imports the calendar recording through the dashboard file input and verifies the replay, graph, metrics, and timeline.
+
+## Live Playwright capture & run (no hand-written JSON)
+
+The bundled `demo-shop` app can be recorded and driven by a **real browser** end to end. Install browsers once:
+
+```bash
+cd apps/api
+pip install -e ".[dev]"
+python -m playwright install chromium
+```
+
+One command — serves the app, records it live, runs the agent against a broken checkout, and reports where it failed:
+
+```bash
+python -m app.scripts.live
+```
+
+Or step by step:
+
+```bash
+# 1) serve the demo-shop app (append ?broken=1 to break checkout)
+python -m app.scripts.serve_demo                 # http://localhost:8080
+
+# 2) record it live into a recording JSON
+python -m app.scripts.record --url http://localhost:8080 --out live-checkout.json
+
+# 3) import it, then run the live Playwright agent against it
+curl -X POST http://localhost:8000/v1/recordings:import \
+  -H "content-type: application/json" --data-binary @live-checkout.json
+curl -X POST "http://localhost:8000/v1/workflows/live-checkout/runs?driver=playwright"
+```
+
+`driver=playwright` executes each recorded command in Chromium, captures the real network responses, and stops at the first step that fails live (e.g. a `500` on checkout). AgentReplay then classifies the failure (network-caused, wrong-element, …) exactly like the seeded drivers.
+
+The capture/execution logic is unit-tested against a fake page (`apps/api/tests/test_playwright.py`), so CI stays green **without** a browser — only the live CLIs (`serve_demo`, `record`, `live`) and `driver=playwright` need Chromium installed.

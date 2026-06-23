@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a problem with AgentReplay
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run `...`
+        2. Open `...`
+        3. See error
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [web dashboard, api / compiler, agent driver, recorder, benchmark, docs, other]
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "OS, Python version, Node version, browser"
+    validations:
+      required: false

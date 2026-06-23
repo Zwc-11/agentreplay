@@ -49,3 +49,18 @@ export type ImportResult = {
   workflowId: string;
   workflow: WorkflowGraph;
 };
+
+export type DriverAggregate = {
+  driver: string; workflows: number; taskSuccessRate: number; meanStepAccuracy: number;
+  totalWrongClicks: number; meanFirstDivergence: number | null; networkCausedFailures: number;
+};
+export type BenchmarkRow = {
+  workflow: string; driver: string; success: boolean;
+  stepAccuracy: number; divergenceStep: number | null; category: string | null;
+};
+export type Benchmark = {
+  workflows: number;
+  drivers: Record<string, DriverAggregate>;
+  rows: BenchmarkRow[];
+  categories: Record<string, number>;
+};

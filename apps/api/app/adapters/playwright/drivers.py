@@ -133,6 +133,13 @@ class LLMAgentDriver:
         return f"{c.kind} {target}".strip()
 
 
+def _playwright_driver():
+    from app.adapters.playwright.runner import PlaywrightAgentDriver
+    from app.config import settings
+
+    return PlaywrightAgentDriver(base_url=settings.playwright_base_url)
+
+
 def _llm_driver():
     from app.adapters.llm.deepseek import get_default_client
 
@@ -144,6 +151,7 @@ DRIVERS = {
     DivergentAgentDriver.name: lambda: DivergentAgentDriver(),
     RandomAgentDriver.name: lambda: RandomAgentDriver(),
     LLMAgentDriver.name: _llm_driver,
+    "playwright": _playwright_driver,
 }
 
 

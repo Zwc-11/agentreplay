@@ -101,3 +101,35 @@ class Graph:
 
     def state_nodes(self) -> list:
         return [n for n in self.nodes if n.kind in ("page-state", "assertion")]
+
+
+# --- deserialization (rebuild domain objects from stored JSON) ---
+def command_from_dict(d: dict | None) -> Command | None:
+    if not d:
+        return None
+    return Command(
+        kind=d["kind"], selector=d.get("selector"), role=d.get("role"),
+        name=d.get("name"), text=d.get("text"), value=d.get("value"), url=d.get("url"),
+    )
+
+
+def node_from_dict(d: dict) -> Node:
+    return Node(
+        id=d["id"], kind=d["kind"], label=d["label"], step_index=d.get("stepIndex", 0),
+        url=d.get("url"), screenshot_key=d.get("screenshotKey"),
+        dom_snapshot_key=d.get("domSnapshotKey"), meta=d.get("meta") or {},
+    )
+
+
+def edge_from_dict(d: dict) -> Edge:
+    return Edge(
+        id=d["id"], source=d["source"], target=d["target"], kind=d["kind"],
+        command=command_from_dict(d.get("command")), label=d.get("label"),
+    )
+
+
+def graph_from_dict(d: dict) -> Graph:
+    g = Graph(id=d["id"], session_id=d["sessionId"])
+    g.nodes = [node_from_dict(n) for n in d.get("nodes", [])]
+    g.edges = [edge_from_dict(e) for e in d.get("edges", [])]
+    return g

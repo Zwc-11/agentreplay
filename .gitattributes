@@ -1,0 +1,15 @@
+# Normalize line endings to LF on checkin (built cross-platform).
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+
+package-lock.json linguist-generated=true
+*.json text
+*.py text
+*.ts text
+*.tsx text

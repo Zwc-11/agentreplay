@@ -84,3 +84,10 @@ def test_import_recording_rejects_empty_events():
         json={"sessionId": "empty-import", "name": "Empty import", "events": []},
     )
     assert response.status_code == 422
+
+
+def test_root_index_orients_the_user():
+    r = client.get("/").json()
+    assert r["name"] == "AgentReplay"
+    assert r["endpoints"]["workflows"] == "/v1/workflows"
+    assert r["docs"] == "/docs"

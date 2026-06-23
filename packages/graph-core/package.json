@@ -8,5 +8,9 @@
   "license": "MIT",
   "dependencies": {
     "@agentreplay/shared-types": "0.1.0"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "tsx --test test/*.test.ts"
   }
 }

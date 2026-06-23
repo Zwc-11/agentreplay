@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demo Shop</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 560px; margin: 40px auto; padding: 0 16px; }
+    section { display: none; } section.active { display: block; }
+    label { display: block; margin: 10px 0 4px; } input { padding: 8px; width: 100%; box-sizing: border-box; }
+    button, a.btn { display: inline-block; margin-top: 14px; padding: 9px 14px; cursor: pointer; }
+    .ad { display: inline-block; margin-top: 14px; color: #b45309; }
+    .err { color: #b91c1c; }
+  </style>
+</head>
+<body>
+  <h1>Demo Shop</h1>
+
+  <section id="login" class="active">
+    <h2>Login</h2>
+    <label for="email">Email</label><input id="email" type="email" aria-label="Email" />
+    <label for="password">Password</label><input id="password" type="password" aria-label="Password" />
+    <button id="signin">Sign in</button>
+  </section>
+
+  <section id="dashboard">
+    <h2>Dashboard</h2>
+    <label for="search">Search products</label><input id="search" type="search" aria-label="Search products" />
+    <button id="search-btn">Search</button>
+  </section>
+
+  <section id="search-results">
+    <h2>Results</h2>
+    <p>Aurora Wireless Headphones</p>
+    <button id="add">Add to cart</button>
+    <a id="checkout" class="btn" role="link">Checkout</a>
+  </section>
+
+  <section id="checkout-page">
+    <h2>Checkout</h2>
+    <p>1 item · $129</p>
+    <button id="place-order">Place order</button>
+    <a class="ad" role="link">Special offer</a>
+    <p id="checkout-err" class="err"></p>
+  </section>
+
+  <section id="success">
+    <h2 class="confirmation">Order confirmed</h2>
+    <p>Thanks for your purchase.</p>
+  </section>
+
+  <script>
+    const broken = new URLSearchParams(location.search).get("broken") === "1";
+    const show = (id) => {
+      document.querySelectorAll("section").forEach((s) => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    };
+    const post = (path) => fetch(path, { method: "POST" });
+
+    document.getElementById("signin").onclick = async () => {
+      await post("/api/session");
+      show("dashboard");
+    };
+    document.getElementById("search-btn").onclick = async () => {
+      await fetch("/api/products?q=" + encodeURIComponent(document.getElementById("search").value));
+      show("search-results");
+    };
+    document.getElementById("add").onclick = async () => {
+      await post("/api/cart");
+    };
+    document.getElementById("checkout").onclick = () => show("checkout-page");
+    document.getElementById("place-order").onclick = async () => {
+      // In broken mode the checkout API returns 500 and we stay on this page.
+      const res = await post("/api/checkout" + (broken ? "?fail=1" : ""));
+      if (res.ok) {
+        show("success");
+      } else {
+        document.getElementById("checkout-err").textContent = "Checkout failed (" + res.status + ").";
+      }
+    };
+  </script>
+</body>
+</html>

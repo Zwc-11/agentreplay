@@ -5,9 +5,16 @@
     "moduleResolution": "Bundler",
     "lib": ["ES2022", "DOM"],
     "strict": true,
-    "declaration": true,
+    "noEmit": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@agentreplay/shared-types": ["./packages/shared-types/src/index.ts"],
+      "@agentreplay/graph-core": ["./packages/graph-core/src/index.ts"],
+      "@agentreplay/eval-core": ["./packages/eval-core/src/index.ts"],
+      "@agentreplay/playwright-generator": ["./packages/playwright-generator/src/index.ts"],
+      "@agentreplay/recorder-sdk": ["./packages/recorder-sdk/src/index.ts"]
+    }
   }
 }

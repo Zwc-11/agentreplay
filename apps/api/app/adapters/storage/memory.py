@@ -38,6 +38,9 @@ class InMemoryStore:
     def get_graph(self, workflow_id: str):
         return self.graphs.get(workflow_id)
 
+    def session_for(self, workflow_id: str) -> str:
+        return self.graph_session[workflow_id]
+
     def list_workflows(self) -> list:
         out = []
         for wid, g in self.graphs.items():

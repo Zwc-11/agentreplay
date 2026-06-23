@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import os
 
-from app.adapters.storage.memory import InMemoryStore
+from app.adapters.storage.factory import get_store
 from app.services.pipeline import compile_session, ingest
 
 WORKFLOW_ID = "demo-checkout"
@@ -19,7 +19,7 @@ RECORDINGS = {
     "calendar-demo": os.path.join(_EXAMPLES, "demo-calendar", "recordings", "event.json"),
 }
 
-store = InMemoryStore()
+store = get_store()
 _seeded = False
 workflow_goals: dict[str, str] = {}
 

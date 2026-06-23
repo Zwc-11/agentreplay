@@ -33,7 +33,9 @@ class Settings:
     redis_url: str = os.getenv("REDIS_URL", "redis://localhost:6379/0")
     storage_backend: str = os.getenv("STORAGE_BACKEND", "filesystem")
     storage_dir: str = os.getenv("STORAGE_DIR", "./storage")
+    store_backend: str = os.getenv("STORE_BACKEND", "memory")  # memory | postgres
     cors_origins: str = os.getenv("API_CORS_ORIGINS", "http://localhost:3000")
+    playwright_base_url: str = os.getenv("PLAYWRIGHT_BASE_URL", "http://localhost:8080")
 
     # ---- DeepSeek (OpenAI-compatible) ----
     deepseek_api_key: str = os.getenv("DEEPSEEK_API_KEY", "")

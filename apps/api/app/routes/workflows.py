@@ -21,7 +21,7 @@ def demo(workflow_id: str = state.WORKFLOW_ID) -> dict:
     graph = state.store.get_graph(workflow_id)
     if graph is None:
         raise HTTPException(404, "workflow not found")
-    session_id = state.store.graph_session[workflow_id]
+    session_id = state.store.session_for(workflow_id)
     run = run_agent(state.store, workflow_id, "divergent", goal=state.goal_for_workflow(workflow_id))
     return {
         "workflow": graph.to_dict(),
@@ -45,7 +45,7 @@ def get_events(workflow_id: str) -> dict:
     graph = state.store.get_graph(workflow_id)
     if graph is None:
         raise HTTPException(404, "workflow not found")
-    session_id = state.store.graph_session[workflow_id]
+    session_id = state.store.session_for(workflow_id)
     return {"workflowId": workflow_id, "events": state.store.load_events(session_id)}
 
 
@@ -64,5 +64,5 @@ def replay(workflow_id: str, step: int = Query(0, ge=0)) -> dict:
     graph = state.store.get_graph(workflow_id)
     if graph is None:
         raise HTTPException(404, "workflow not found")
-    session_id = state.store.graph_session[workflow_id]
+    session_id = state.store.session_for(workflow_id)
     return reconstruct_at(state.store.load_events(session_id), step)

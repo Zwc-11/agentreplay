@@ -69,5 +69,7 @@ def get_default_client() -> Optional[DeepSeekClient]:
             reasoning_effort=settings.deepseek_reasoning_effort,
             thinking=settings.deepseek_thinking,
         )
-    except RuntimeError:
+    except Exception as e:  # noqa: BLE001 - never let LLM setup crash a run
+        import sys as _sys
+        print(f"[agentreplay] DeepSeek client unavailable ({e}); falling back to heuristic.", file=_sys.stderr)
         return None

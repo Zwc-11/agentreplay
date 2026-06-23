@@ -1,0 +1,134 @@
+{
+  "workflows": 4,
+  "drivers": {
+    "scripted": {
+      "driver": "scripted",
+      "workflows": 4,
+      "taskSuccessRate": 1.0,
+      "meanStepAccuracy": 1.0,
+      "totalWrongClicks": 0,
+      "meanFirstDivergence": null,
+      "networkCausedFailures": 0
+    },
+    "divergent": {
+      "driver": "divergent",
+      "workflows": 4,
+      "taskSuccessRate": 0.0,
+      "meanStepAccuracy": 0.626,
+      "totalWrongClicks": 4,
+      "meanFirstDivergence": 6.75,
+      "networkCausedFailures": 1
+    },
+    "random": {
+      "driver": "random",
+      "workflows": 4,
+      "taskSuccessRate": 0.0,
+      "meanStepAccuracy": 0.466,
+      "totalWrongClicks": 4,
+      "meanFirstDivergence": 4.75,
+      "networkCausedFailures": 1
+    }
+  },
+  "rows": [
+    {
+      "workflow": "demo-checkout",
+      "driver": "scripted",
+      "success": true,
+      "stepAccuracy": 1.0,
+      "divergenceStep": null,
+      "category": null
+    },
+    {
+      "workflow": "checkout-flaky",
+      "driver": "scripted",
+      "success": true,
+      "stepAccuracy": 1.0,
+      "divergenceStep": null,
+      "category": null
+    },
+    {
+      "workflow": "crm-demo",
+      "driver": "scripted",
+      "success": true,
+      "stepAccuracy": 1.0,
+      "divergenceStep": null,
+      "category": null
+    },
+    {
+      "workflow": "calendar-demo",
+      "driver": "scripted",
+      "success": true,
+      "stepAccuracy": 1.0,
+      "divergenceStep": null,
+      "category": null
+    },
+    {
+      "workflow": "demo-checkout",
+      "driver": "divergent",
+      "success": false,
+      "stepAccuracy": 0.8125,
+      "divergenceStep": 13,
+      "category": "wrong-element"
+    },
+    {
+      "workflow": "checkout-flaky",
+      "driver": "divergent",
+      "success": false,
+      "stepAccuracy": 0.25,
+      "divergenceStep": 1,
+      "category": "network-caused"
+    },
+    {
+      "workflow": "crm-demo",
+      "driver": "divergent",
+      "success": false,
+      "stepAccuracy": 0.7273,
+      "divergenceStep": 8,
+      "category": "wrong-element"
+    },
+    {
+      "workflow": "calendar-demo",
+      "driver": "divergent",
+      "success": false,
+      "stepAccuracy": 0.7143,
+      "divergenceStep": 5,
+      "category": "wrong-element"
+    },
+    {
+      "workflow": "demo-checkout",
+      "driver": "random",
+      "success": false,
+      "stepAccuracy": 0.625,
+      "divergenceStep": 10,
+      "category": "wrong-element"
+    },
+    {
+      "workflow": "checkout-flaky",
+      "driver": "random",
+      "success": false,
+      "stepAccuracy": 0.5,
+      "divergenceStep": 2,
+      "category": "network-caused"
+    },
+    {
+      "workflow": "crm-demo",
+      "driver": "random",
+      "success": false,
+      "stepAccuracy": 0.4545,
+      "divergenceStep": 5,
+      "category": "wrong-element"
+    },
+    {
+      "workflow": "calendar-demo",
+      "driver": "random",
+      "success": false,
+      "stepAccuracy": 0.2857,
+      "divergenceStep": 2,
+      "category": "wrong-element"
+    }
+  ],
+  "categories": {
+    "wrong-element": 6,
+    "network-caused": 2
+  }
+}

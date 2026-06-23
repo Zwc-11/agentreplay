@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app import state
 from app.config import settings
-from app.routes import agent_runs, events, health, workflows
+from app.routes import agent_runs, benchmark, blobs, events, health, workflows
 
 
 @asynccontextmanager
@@ -27,3 +27,5 @@ app.include_router(health.router)
 app.include_router(events.router, prefix="/v1")
 app.include_router(workflows.router, prefix="/v1")
 app.include_router(agent_runs.router, prefix="/v1")
+app.include_router(benchmark.router, prefix="/v1")
+app.include_router(blobs.router, prefix="/v1")

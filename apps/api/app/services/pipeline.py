@@ -28,15 +28,18 @@ def compile_session(store, session_id: str, graph_id: str | None = None):
     return graph
 
 
+_UNSET = object()
+
+
 def run_agent(
-    store, workflow_id: str, driver_name: str = "divergent", goal: str = "the workflow"
+    store, workflow_id: str, driver_name: str = "divergent", goal: str = "the workflow", client=_UNSET
 ) -> dict:
     graph = store.get_graph(workflow_id)
     if graph is None:
         raise ValueError(f"unknown workflow: {workflow_id}")
 
     human = graph.human_commands()
-    session_id = store.graph_session[workflow_id]
+    session_id = store.session_for(workflow_id)
     events = store.load_events(session_id)
     network_events = [
         e["network"] for e in events if e["eventType"] == "network" and e.get("network")
@@ -45,6 +48,8 @@ def run_agent(
 
     task = WorkflowTask(workflow_id, goal, start_url, human)
     result = get_driver(driver_name).run(task)
+    if getattr(result, "network", None):
+        network_events = result.network  # live observations override the recording
 
     last_step = max((e["stepIndex"] for e in events), default=0)
     snap = reconstruct_at(events, last_step)
@@ -53,7 +58,8 @@ def run_agent(
     )
     comparison = build_comparison(graph, result.commands)
     test = generate_test(graph, test_name=goal)
-    client = get_default_client()
+    if client is _UNSET:
+        client = get_default_client()
     summary = generate_summary(
         graph,
         human,

@@ -2,110 +2,121 @@
 
 # AgentReplay
 
-### A browser workflow flight recorder for AI agents
+### Browser workflow replay and failure analysis for agent testing
 
-**Record a real web workflow once → compile it into a replayable simulator → run an agent against it → see exactly where the agent diverged.**
+**Record a real web workflow once -> compile it into a replayable simulator -> run an agent against it -> see exactly where it diverged.**
 
-[Architecture](docs/architecture.md) · [Event Schema](docs/event-schema.md) · [Workflow Graph](docs/workflow-graph.md) · [Evaluation](docs/evaluation.md) · [Deployment](docs/deployment.md) · [DeepSeek](docs/deepseek.md) · [Roadmap](PLAN.md)
+[![CI](https://github.com/Zwc-11/agentreplay/actions/workflows/ci.yml/badge.svg)](https://github.com/Zwc-11/agentreplay/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](CONTRIBUTING.md)
+![Python](https://img.shields.io/badge/python-3.11%2B-3776ab)
+![Node](https://img.shields.io/badge/node-20%2B-3c873a)
+
+[Live demo](https://zwc-11.github.io/agentreplay/) | [Architecture](docs/architecture.md) | [Event Schema](docs/event-schema.md) | [Workflow Graph](docs/workflow-graph.md) | [Evaluation](docs/evaluation.md) | [Deployment](docs/deployment.md) | [DeepSeek](docs/deepseek.md) | [Roadmap](PLAN.md)
 
 </div>
 
 ---
 
-## What is AgentReplay?
+![AgentReplay dashboard showing a real calendar workflow replay](artifacts/agentreplay-calendar-real-recording.png)
 
-AgentReplay is an open-source **browser workflow simulator** and failure-analysis platform. You record a human performing a real browser workflow once — clicks, typed input, navigations, network calls, DOM snapshots — and AgentReplay turns that recording into a structured **workflow graph** and a runnable **Playwright replay environment**.
+## Try It In 60 Seconds
 
-You then run a browser agent against the same task and AgentReplay performs a **human-vs-agent path comparison**: it overlays the two paths on an interactive graph, pinpoints the **first divergence step**, and explains the failure with step-level metrics, a timeline of DOM/network/console state, and an AI-generated root-cause summary.
-
-Think **Sentry + Playwright Trace Viewer + React Flow + an agent evaluation layer**, focused specifically on the browser-automation lane.
-
-> The product in one line: **Record workflow → compile graph → run agent → compare paths → explain failure → export Playwright test.**
-
-## Why browser agents fail
-
-Browser agents fail in ways that are hard to see from a transcript alone:
-
-- They click the **wrong element** (an ad, a lookalike button, a stale selector).
-- They act on a **stale DOM state** before a route finishes loading.
-- A **network failure** (e.g. a `500` on submit) disables a control, and the agent retries the wrong action instead of recovering.
-- They **diverge silently** several steps before the visible failure, so the real root cause is buried.
-
-A flat log of actions doesn't surface any of this. AgentReplay reconstructs the **browser state at every step** and renders the divergence as a graph, so the root cause is obvious in about three seconds.
-
-## Architecture
-
-```
-┌──────────────────────────────┐
-│ Demo Website / User Browser  │
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│ Recorder SDK / Playwright    │  captures events + DOM/a11y snapshots
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│ Ingestion API                │  auth, validation, batching
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│ Event Store                  │  PostgreSQL (JSONB) + object storage
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│ Workflow Compiler Worker     │  events → states → graph
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│ Agent Runner + Evaluator     │  Playwright run + metrics
-└──────────────┬───────────────┘
-               ▼
-┌──────────────────────────────┐
-│ React Dashboard              │  replay, graph, metrics, AI summary
-└──────────────────────────────┘
-```
-
-The backend uses **event sourcing** (every browser event is stored append-only and replayable) and **hexagonal architecture** (domain logic in `core/`, infrastructure behind `adapters/`), so the compiler and evaluator can be tested without the web server or database. See [docs/architecture.md](docs/architecture.md) for the full design and rationale.
-
-**Stack:** React + TypeScript + Tailwind + React Flow + Framer Motion (web) · FastAPI + Playwright (api) · PostgreSQL + Redis · Docker Compose. LLMs are used only for human-readable summaries, never for core logic.
-
-## Repository layout
-
-```
-agentreplay/
-  apps/
-    web/                 React dashboard (graph, replay, timeline, metrics)
-    api/                 FastAPI: ingestion, compiler, agent runner, evaluator
-  packages/
-    recorder-sdk/        Browser recorder → BrowserEvent stream
-    playwright-generator/ Workflow graph → runnable Playwright test
-    graph-core/          events → states → workflow graph (framework-free)
-    eval-core/           divergence detection + metrics (framework-free)
-    shared-types/        BrowserEvent, BrowserCommand, WorkflowGraph types
-  infra/                 docker-compose, postgres, redis
-  examples/              demo-shop, demo-crm, demo-calendar
-  docs/                  architecture, event-schema, workflow-graph, evaluation
-  tests/                 e2e (Playwright) + integration
-```
-
-## Quick start
+The dashboard works without a backend by loading bundled demo data and falling back to demo mode automatically.
 
 ```bash
-git clone https://github.com/Zwc-11/agentreplay.git
-cd agentreplay
-cp .env.example .env
-docker compose -f infra/docker-compose.yml up
+npm install
+npm run dev -w @agentreplay/web
 ```
 
-Then open the dashboard:
+Open:
 
-```
+```text
 http://localhost:3000
 ```
 
-The dashboard ships with **demo mode** (seeded workflows) so the system is explorable without recording anything first. See [docs/local-setup.md](docs/local-setup.md) for development without Docker.
+Prefer the terminal? Run the whole pipeline:
 
-To test real recording ingestion without Docker:
+```bash
+cd apps/api
+pip install -e ".[dev]"
+python -m app.scripts.demo
+```
+
+Everything wired together:
+
+```bash
+docker compose -f infra/docker-compose.yml up
+```
+
+Run `make help` to see common development commands.
+
+## What Is AgentReplay?
+
+AgentReplay is an open-source browser workflow simulator and failure-analysis platform. It records a human performing a real browser workflow, including clicks, typed input, navigations, network calls, and DOM snapshots, then turns that recording into a structured workflow graph and runnable Playwright replay.
+
+You can run a browser agent against the same task and compare the human path to the agent path. The dashboard shows the first divergence step, step-level metrics, timeline evidence, network state, root-cause summary, and an exportable Playwright test.
+
+The product loop is:
+
+```text
+Record workflow -> compile graph -> run agent -> compare paths -> explain failure -> export Playwright test
+```
+
+## Why Browser Agents Fail
+
+Browser agents fail in ways that are hard to diagnose from a transcript alone:
+
+- They click the wrong element, such as an ad, lookalike button, or stale selector.
+- They act on stale DOM state before a route finishes loading.
+- A network failure disables the intended control, then the agent retries the wrong action.
+- They diverge silently several steps before the visible failure.
+
+AgentReplay reconstructs the browser state at every step and renders the divergence as a graph so the root cause is clear quickly.
+
+## Architecture
+
+```text
+Demo Website / User Browser
+  -> Recorder SDK / Playwright
+  -> Ingestion API
+  -> Event Store
+  -> Workflow Compiler
+  -> Agent Runner + Evaluator
+  -> React Dashboard
+```
+
+The backend uses event sourcing and a hexagonal architecture. Core logic lives in `core/`; infrastructure adapters live behind `adapters/`. This keeps the compiler and evaluator testable without a web server or database.
+
+Stack:
+
+- Web: React, TypeScript, Tailwind, React Flow, Framer Motion
+- API: FastAPI, Playwright
+- Storage: PostgreSQL, Redis, filesystem/object storage adapters
+- Tooling: Docker Compose, Playwright, pytest, Vitest
+
+## Repository Layout
+
+```text
+agentreplay/
+  apps/
+    web/                  React dashboard
+    api/                  FastAPI ingestion, compiler, runner, evaluator
+  packages/
+    recorder-sdk/         Browser recorder -> BrowserEvent stream
+    playwright-generator/ Workflow graph -> runnable Playwright test
+    graph-core/           Events -> states -> workflow graph
+    eval-core/            Divergence detection and metrics
+    shared-types/         Shared TypeScript contracts
+  infra/                  Docker Compose
+  examples/               Demo shop, CRM, and calendar workflows
+  docs/                   Architecture and implementation docs
+  tests/                  End-to-end tests
+```
+
+## Real Recording Import
+
+Start the API and dashboard:
 
 ```bash
 # terminal 1
@@ -113,24 +124,38 @@ cd apps/api
 pip install -e ".[dev]"
 python -m uvicorn app.main:app --reload --port 8000
 
-# terminal 2, from the repo root
+# terminal 2, from repo root
 npm install
 npm run dev -w @agentreplay/web
 ```
 
-Open `http://localhost:3000`, click **Import Recording**, and choose `examples/demo-calendar/recordings/event.json`. See [docs/real-recordings.md](docs/real-recordings.md) for the SDK snippet, API import endpoint, and verification commands.
+Open `http://localhost:3000`, click **Import Recording**, and choose:
 
-## Demo workflow
+```text
+examples/demo-calendar/recordings/event.json
+```
 
-1. Record a checkout flow on the bundled `demo-shop` app with the recorder SDK.
-2. AgentReplay compiles the event stream into a workflow graph: `Login → Search → Add to cart → Checkout → Success`.
-3. Run an agent against the same task (start with the built-in `ScriptedAgentDriver` and `RandomAgentDriver` — no API keys required).
-4. The dashboard overlays the human and agent paths; the divergence node pulses red where the agent went wrong.
-5. Export a runnable Playwright test, or open a pre-filled GitHub issue from the failure summary.
+The API endpoint is also available directly:
 
-## Event schema
+```bash
+curl -X POST http://localhost:8000/v1/recordings:import \
+  -H "content-type: application/json" \
+  --data-binary @examples/demo-calendar/recordings/event.json
+```
 
-Recordings are stored as a stream of structured `BrowserEvent`s — not just screenshots:
+See [docs/real-recordings.md](docs/real-recordings.md) for SDK usage and import details.
+
+## Demo Workflow
+
+1. Record a checkout flow on the bundled demo shop.
+2. AgentReplay compiles the event stream into a workflow graph.
+3. Run one of the built-in drivers or the LLM driver against the task.
+4. Inspect the human and agent paths in the graph.
+5. Export a runnable Playwright test or open a pre-filled GitHub issue from the failure summary.
+
+## Event Schema
+
+Recordings are stored as structured browser events:
 
 ```ts
 type BrowserEvent = {
@@ -152,11 +177,11 @@ type BrowserEvent = {
 };
 ```
 
-Full schema and storage model: [docs/event-schema.md](docs/event-schema.md).
+Full schema: [docs/event-schema.md](docs/event-schema.md).
 
-## Generated Playwright tests
+## Generated Playwright Tests
 
-Every recorded workflow compiles to a runnable [Playwright](https://playwright.dev) test:
+Every recorded workflow compiles to a runnable Playwright test:
 
 ```ts
 test("checkout workflow", async ({ page }) => {
@@ -167,9 +192,9 @@ test("checkout workflow", async ({ page }) => {
 });
 ```
 
-## Evaluation metrics
+## Evaluation Metrics
 
-AgentReplay reports measurable, step-level outcomes for every agent run:
+AgentReplay reports measurable, step-level outcomes for every run:
 
 | Metric | What it tells you |
 | --- | --- |
@@ -182,11 +207,31 @@ AgentReplay reports measurable, step-level outcomes for every agent run:
 | Replay reconstruction success | Could the workflow be fully rebuilt? |
 | Generated test pass rate | Do the exported Playwright tests pass? |
 
-Definitions and formulas: [docs/evaluation.md](docs/evaluation.md).
+Definitions: [docs/evaluation.md](docs/evaluation.md).
 
-## Roadmap
+## Benchmark
 
-A six-week MVP plan (foundation → replay → graph compiler → agent comparison → AI summaries → enterprise polish) lives in [PLAN.md](PLAN.md).
+Run:
+
+```bash
+python -m app.scripts.benchmark
+```
+
+You can also use `GET /v1/benchmark` or the **Benchmark** tab in the dashboard.
+
+Bundled demo benchmark across 4 workflows and 3 drivers:
+
+| Driver | Task success | Mean step accuracy | Wrong clicks | Mean first divergence | Network-caused |
+| --- | --- | --- | --- | --- | --- |
+| scripted | 100% | 100% | 0 | - | 0 |
+| divergent | 0% | 63% | 4 | step 6.75 | 1 |
+| random | 0% | 47% | 4 | step 4.75 | 1 |
+
+The scripted driver is the always-correct baseline. The divergent and random drivers are deliberate failure drivers. Use `driver=llm` to benchmark the DeepSeek thinking model.
+
+## Contributing
+
+Contributions are welcome: bug reports, docs, demo workflows, and features. See [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), and [SECURITY.md](SECURITY.md). Notable changes are tracked in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
