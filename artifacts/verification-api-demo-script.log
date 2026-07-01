@@ -1,0 +1,74 @@
+========================================================================
+AgentReplay - record -> compile -> run -> compare -> explain -> export
+========================================================================
+Workflow: demo-checkout   nodes=21  human_actions=16
+Driver: divergent   DeepSeek enabled: True
+
+Human path:
+   1. click         Email
+   2. fill          Email = "demo@shop.test"
+   3. click         Password
+   4. fill          Password = "hunter2"
+   5. click         Sign in
+   6. goto          https://demo-shop.local/dashboard
+   7. click         Search products
+   8. fill          Search products = "wireless headphones"
+   9. click         Search
+  10. goto          https://demo-shop.local/search
+  11. click         Add to cart
+  12. click         Checkout
+  13. goto          https://demo-shop.local/checkout
+  14. click         Place order
+  15. goto          https://demo-shop.local/success
+  16. assertVisible Order confirmed
+
+Agent path (driver = divergent):
+   1. click         Email
+   2. fill          Email = "demo@shop.test"
+   3. click         Password
+   4. fill          Password = "hunter2"
+   5. click         Sign in
+   6. goto          https://demo-shop.local/dashboard
+   7. click         Search products
+   8. fill          Search products = "wireless headphones"
+   9. click         Search
+  10. goto          https://demo-shop.local/search
+  11. click         Add to cart
+  12. click         Checkout
+  13. goto          https://demo-shop.local/checkout
+  14. click         Special offer  <-- DIVERGES HERE
+
+First divergence : step 14 of 16
+Failure category : wrong-element
+Metrics          : success=False  step_accuracy=0.8125  wrong_clicks=1  recovered=False  replay_latency_ms=0
+
+AI summary (DeepSeek):
+  The agent clicked "Special offer" instead of "Place order" because it incorrectly prioritized the visually prominent promotional element over the correct checkout button, likely due to ambiguous layout or insufficient discrimination of actionable text. To prevent this, incorporate explicit text-matching constraints for action buttons and apply a deprioritization rule for non-essential elements like advertisements during checkout steps. (Step accuracy 81%, 1 wrong action(s); recovered: no.)
+
+Generated GitHub issue title:
+  Agent diverged at step 14 (wrong-element) in complete a checkout
+
+Generated Playwright test:
+
+import { test, expect } from "@playwright/test";
+
+test("complete a checkout", async ({ page }) => {
+  await page.getByRole("textbox", { name: "Email" }).click();
+  await page.getByRole("textbox", { name: "Email" }).fill("demo@shop.test");
+  await page.getByRole("textbox", { name: "Password" }).click();
+  await page.getByRole("textbox", { name: "Password" }).fill("hunter2");
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.goto("https://demo-shop.local/dashboard");
+  await page.getByRole("searchbox", { name: "Search products" }).click();
+  await page.getByRole("searchbox", { name: "Search products" }).fill("wireless headphones");
+  await page.getByRole("button", { name: "Search" }).click();
+  await page.goto("https://demo-shop.local/search");
+  await page.getByRole("button", { name: "Add to cart" }).click();
+  await page.getByRole("link", { name: "Checkout" }).click();
+  await page.goto("https://demo-shop.local/checkout");
+  await page.getByRole("button", { name: "Place order" }).click();
+  await page.goto("https://demo-shop.local/success");
+  await expect(page.getByText("Order confirmed")).toBeVisible();
+});
+
+========================================================================

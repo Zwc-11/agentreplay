@@ -1,0 +1,16 @@
+{
+  "label": "[bundled demo data]",
+  "dashboardUrl": "http://localhost:3000",
+  "workflow": "calendar-demo",
+  "connectionStatus": "Live API",
+  "containsCalendarWorkflow": true,
+  "containsFirstDivergenceMetric": true,
+  "containsExpectedCalendarDivergence": true,
+  "screenshot": "artifacts/agentreplay-calendar-divergence-demo.png",
+  "video": "artifacts/agentreplay-calendar-divergence-demo.webm",
+  "consoleMessages": [
+    "[vite] connecting...",
+    "[vite] connected.",
+    "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+  ]
+}

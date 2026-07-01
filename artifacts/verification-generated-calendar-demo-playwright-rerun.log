@@ -1,0 +1,27 @@
+
+Running 1 test using 1 worker
+
+[1/1] artifacts\generated-calendar-demo.spec.ts:3:5 › recorded workflow
+  1) artifacts\generated-calendar-demo.spec.ts:3:5 › recorded workflow ─────────────────────────────
+
+    Test timeout of 10000ms exceeded.
+
+    Error: locator.click: Test timeout of 10000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'New event' })
+
+
+      2 |
+      3 | test("recorded workflow", async ({ page }) => {
+    > 4 |   await page.getByRole("button", { name: "New event" }).click();
+        |                                                         ^
+      5 |   await page.getByRole("textbox", { name: "Event title" }).click();
+      6 |   await page.getByRole("textbox", { name: "Event title" }).fill("Design review");
+      7 |   await page.getByRole("textbox", { name: "Start time" }).click();
+        at C:\AgentReplay\artifacts\generated-calendar-demo.spec.ts:4:57
+
+    Error Context: test-results\generated-calendar-demo-recorded-workflow\error-context.md
+
+
+  1 failed
+    artifacts\generated-calendar-demo.spec.ts:3:5 › recorded workflow ──────────────────────────────

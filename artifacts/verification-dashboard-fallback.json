@@ -1,0 +1,21 @@
+{
+  "label": "[bundled demo data]",
+  "dashboardUrl": "http://localhost:3000",
+  "apiIntentionallyStopped": true,
+  "connectionStatus": "Demo mode",
+  "loadedWorkflowGraph": true,
+  "loadedBundledWorkflow": true,
+  "consoleMessages": [
+    "[vite] connecting...",
+    "[vite] connected.",
+    "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "[AgentReplay] API unreachable — showing the bundled demo fixture (offline mode).",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+  ]
+}

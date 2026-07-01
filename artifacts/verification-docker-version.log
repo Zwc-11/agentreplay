@@ -1,0 +1,9 @@
+Client:
+ Version:           28.3.2
+ API version:       1.51
+ Go version:        go1.24.5
+ Git commit:        578ccf6
+ Built:             Wed Jul  9 16:12:31 2025
+ OS/Arch:           windows/amd64
+ Context:           desktop-linux
+error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.51/version": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.

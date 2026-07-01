@@ -1,0 +1,69 @@
+Obtaining file:///C:/AgentReplay/apps/api
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: fastapi>=0.110 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (0.138.0)
+Requirement already satisfied: uvicorn>=0.29 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from uvicorn[standard]>=0.29->agentreplay-api==0.1.0) (0.49.0)
+Requirement already satisfied: pydantic>=2.6 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (2.12.4)
+Requirement already satisfied: psycopg>=3.1 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from psycopg[binary]>=3.1->agentreplay-api==0.1.0) (3.3.4)
+Requirement already satisfied: redis>=5.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (8.0.0)
+Requirement already satisfied: playwright>=1.43 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (1.60.0)
+Requirement already satisfied: openai>=1.40 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (2.7.1)
+Requirement already satisfied: pytest>=8 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (8.4.2)
+Requirement already satisfied: ruff>=0.4 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (0.15.15)
+Requirement already satisfied: mypy>=1.9 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (2.1.0)
+Requirement already satisfied: httpx>=0.27 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from agentreplay-api==0.1.0) (0.28.1)
+Requirement already satisfied: starlette>=0.46.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from fastapi>=0.110->agentreplay-api==0.1.0) (1.3.1)
+Requirement already satisfied: typing-extensions>=4.8.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from fastapi>=0.110->agentreplay-api==0.1.0) (4.15.0)
+Requirement already satisfied: typing-inspection>=0.4.2 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from fastapi>=0.110->agentreplay-api==0.1.0) (0.4.2)
+Requirement already satisfied: annotated-doc>=0.0.2 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from fastapi>=0.110->agentreplay-api==0.1.0) (0.0.4)
+Requirement already satisfied: anyio in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from httpx>=0.27->agentreplay-api==0.1.0) (4.11.0)
+Requirement already satisfied: certifi in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from httpx>=0.27->agentreplay-api==0.1.0) (2025.10.5)
+Requirement already satisfied: httpcore==1.* in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from httpx>=0.27->agentreplay-api==0.1.0) (1.0.9)
+Requirement already satisfied: idna in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from httpx>=0.27->agentreplay-api==0.1.0) (3.11)
+Requirement already satisfied: h11>=0.16 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from httpcore==1.*->httpx>=0.27->agentreplay-api==0.1.0) (0.16.0)
+Requirement already satisfied: mypy_extensions>=1.0.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from mypy>=1.9->agentreplay-api==0.1.0) (1.1.0)
+Requirement already satisfied: pathspec>=1.0.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from mypy>=1.9->agentreplay-api==0.1.0) (1.1.1)
+Requirement already satisfied: librt>=0.11.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from mypy>=1.9->agentreplay-api==0.1.0) (0.11.0)
+Requirement already satisfied: ast-serialize<1.0.0,>=0.3.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from mypy>=1.9->agentreplay-api==0.1.0) (0.5.0)
+Requirement already satisfied: distro<2,>=1.7.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from openai>=1.40->agentreplay-api==0.1.0) (1.9.0)
+Requirement already satisfied: jiter<1,>=0.10.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from openai>=1.40->agentreplay-api==0.1.0) (0.11.1)
+Requirement already satisfied: sniffio in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from openai>=1.40->agentreplay-api==0.1.0) (1.3.1)
+Requirement already satisfied: tqdm>4 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from openai>=1.40->agentreplay-api==0.1.0) (4.67.1)
+Requirement already satisfied: annotated-types>=0.6.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from pydantic>=2.6->agentreplay-api==0.1.0) (0.7.0)
+Requirement already satisfied: pydantic-core==2.41.5 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from pydantic>=2.6->agentreplay-api==0.1.0) (2.41.5)
+Requirement already satisfied: pyee<14,>=13 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from playwright>=1.43->agentreplay-api==0.1.0) (13.0.1)
+Requirement already satisfied: greenlet<4.0.0,>=3.1.1 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from playwright>=1.43->agentreplay-api==0.1.0) (3.5.1)
+Requirement already satisfied: tzdata in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from psycopg>=3.1->psycopg[binary]>=3.1->agentreplay-api==0.1.0) (2025.2)
+Requirement already satisfied: psycopg-binary==3.3.4 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from psycopg[binary]>=3.1->agentreplay-api==0.1.0) (3.3.4)
+Requirement already satisfied: colorama>=0.4 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from pytest>=8->agentreplay-api==0.1.0) (0.4.6)
+Requirement already satisfied: iniconfig>=1 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from pytest>=8->agentreplay-api==0.1.0) (2.3.0)
+Requirement already satisfied: packaging>=20 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from pytest>=8->agentreplay-api==0.1.0) (25.0)
+Requirement already satisfied: pluggy<2,>=1.5 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from pytest>=8->agentreplay-api==0.1.0) (1.6.0)
+Requirement already satisfied: pygments>=2.7.2 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from pytest>=8->agentreplay-api==0.1.0) (2.20.0)
+Requirement already satisfied: click>=7.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from uvicorn>=0.29->uvicorn[standard]>=0.29->agentreplay-api==0.1.0) (8.4.1)
+Requirement already satisfied: httptools>=0.8.0 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from uvicorn[standard]>=0.29->agentreplay-api==0.1.0) (0.8.0)
+Requirement already satisfied: python-dotenv>=0.13 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from uvicorn[standard]>=0.29->agentreplay-api==0.1.0) (1.2.2)
+Requirement already satisfied: pyyaml>=5.1 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from uvicorn[standard]>=0.29->agentreplay-api==0.1.0) (6.0.3)
+Requirement already satisfied: watchfiles>=0.20 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from uvicorn[standard]>=0.29->agentreplay-api==0.1.0) (1.2.0)
+Requirement already satisfied: websockets>=10.4 in c:\users\caesa\appdata\local\programs\python\python313\lib\site-packages (from uvicorn[standard]>=0.29->agentreplay-api==0.1.0) (15.0.1)
+Building wheels for collected packages: agentreplay-api
+  Building editable for agentreplay-api (pyproject.toml): started
+  Building editable for agentreplay-api (pyproject.toml): finished with status 'done'
+  Created wheel for agentreplay-api: filename=agentreplay_api-0.1.0-0.editable-py3-none-any.whl size=2968 sha256=ae6b0e7762d60cfe5486518aa904977b3acf872c9ea14cdbaeed734f66371d66
+  Stored in directory: C:\Users\caesa\AppData\Local\Temp\pip-ephem-wheel-cache-3uqehfo9\wheels\3f\35\e6\e3b941d34382cda945a510c2b9d24afab8e73e0f0a565fcf9a
+Successfully built agentreplay-api
+Installing collected packages: agentreplay-api
+  Attempting uninstall: agentreplay-api
+    Found existing installation: agentreplay-api 0.1.0
+    Uninstalling agentreplay-api-0.1.0:
+      Successfully uninstalled agentreplay-api-0.1.0
+Successfully installed agentreplay-api-0.1.0
+
+[notice] A new release of pip is available: 25.3 -> 26.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
