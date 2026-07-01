@@ -1,0 +1,6 @@
+{
+  "label": "[bundled demo data]",
+  "route": "/v1/workflows/calendar-demo/test",
+  "workflow": "calendar-demo",
+  "artifact": "artifacts/generated-calendar-demo.spec.ts"
+}
