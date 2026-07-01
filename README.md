@@ -6,6 +6,8 @@
 
 **Record a real web workflow once -> compile it into a replayable simulator -> run an agent against it -> see exactly where it diverged.**
 
+**Status: early prototype (v0.x).**
+
 [![CI](https://github.com/Zwc-11/agentreplay/actions/workflows/ci.yml/badge.svg)](https://github.com/Zwc-11/agentreplay/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](CONTRIBUTING.md)
@@ -18,9 +20,11 @@
 
 ---
 
-![AgentReplay dashboard showing a real calendar workflow replay](artifacts/agentreplay-calendar-real-recording.png)
+![AgentReplay dashboard GIF showing the bundled calendar demo human-vs-agent divergence](artifacts/agentreplay-calendar-divergence-demo.gif)
 
-## Try It In 60 Seconds
+_[bundled demo data] Real dashboard capture from a local run of the bundled calendar demo. The GIF shows the human-vs-agent graph and first divergence step for `examples/demo-calendar/recordings/event.json`._
+
+## Quickstart
 
 The dashboard works without a backend by loading bundled demo data and falling back to demo mode automatically.
 
@@ -43,7 +47,7 @@ pip install -e ".[dev]"
 python -m app.scripts.demo
 ```
 
-Everything wired together:
+Optional full-stack Docker path (requires Docker Desktop or another Docker engine running):
 
 ```bash
 docker compose -f infra/docker-compose.yml up
@@ -53,15 +57,19 @@ Run `make help` to see common development commands.
 
 ## What Is AgentReplay?
 
-AgentReplay is an open-source browser workflow simulator and failure-analysis platform. It records a human performing a real browser workflow, including clicks, typed input, navigations, network calls, and DOM snapshots, then turns that recording into a structured workflow graph and runnable Playwright replay.
+AgentReplay is an open-source browser workflow simulator and failure-analysis platform. It records a human performing a browser workflow, including clicks, typed input, navigations, and DOM snapshots. For network evidence, it captures network calls made via fetch (XHR is not intercepted). It then turns that recording into a structured workflow graph and a Playwright test scaffold.
 
-You can run a browser agent against the same task and compare the human path to the agent path. The dashboard shows the first divergence step, step-level metrics, timeline evidence, network state, root-cause summary, and an exportable Playwright test.
+You can run a browser agent against the same task and compare the human path to the agent path. The dashboard shows the first divergence step, step-level metrics, timeline evidence, network state, root-cause summary, and an exportable Playwright test scaffold.
 
 The product loop is:
 
 ```text
-Record workflow -> compile graph -> run agent -> compare paths -> explain failure -> export Playwright test
+Record workflow -> compile graph -> run agent -> compare paths -> explain failure -> export Playwright test scaffold
 ```
+
+## Supported Target Scope
+
+The supported targets today are the bundled demo sites and recordings in `examples/demo-shop`, `examples/demo-crm`, and `examples/demo-calendar`. Real public sites with drifting DOMs, changing network behavior, authentication flows, or anti-automation controls are out of scope for this v0.x prototype.
 
 ## Why Browser Agents Fail
 
@@ -104,7 +112,7 @@ agentreplay/
     api/                  FastAPI ingestion, compiler, runner, evaluator
   packages/
     recorder-sdk/         Browser recorder -> BrowserEvent stream
-    playwright-generator/ Workflow graph -> runnable Playwright test
+    playwright-generator/ Workflow graph -> Playwright test scaffold
     graph-core/           Events -> states -> workflow graph
     eval-core/            Divergence detection and metrics
     shared-types/         Shared TypeScript contracts
@@ -151,7 +159,7 @@ See [docs/real-recordings.md](docs/real-recordings.md) for SDK usage and import 
 2. AgentReplay compiles the event stream into a workflow graph.
 3. Run one of the built-in drivers or the LLM driver against the task.
 4. Inspect the human and agent paths in the graph.
-5. Export a runnable Playwright test or open a pre-filled GitHub issue from the failure summary.
+5. Export a Playwright test scaffold or open a pre-filled GitHub issue from the failure summary.
 
 ## Event Schema
 
@@ -177,18 +185,25 @@ type BrowserEvent = {
 };
 ```
 
+Network events mean the recorder captures network calls made via fetch (XHR is not intercepted). On replay, recorded network events seed the evaluation, but live network observations from a driver override the recording before metrics and summaries are computed; see `run_agent` in [apps/api/app/services/pipeline.py](apps/api/app/services/pipeline.py).
+
 Full schema: [docs/event-schema.md](docs/event-schema.md).
 
 ## Generated Playwright Tests
 
-Every recorded workflow compiles to a runnable Playwright test:
+AgentReplay exports Playwright test scaffolds from recorded human-path commands. In this v0.x prototype, generated tests may need target-app setup such as an initial page URL, route mapping, or fixtures before they run standalone. Verification artifacts for the calendar export are in [artifacts/generated-calendar-demo.spec.ts](artifacts/generated-calendar-demo.spec.ts) and [artifacts/verification-generated-calendar-demo-playwright-rerun.log](artifacts/verification-generated-calendar-demo-playwright-rerun.log).
+
+[bundled demo data] Calendar export scaffold:
 
 ```ts
-test("checkout workflow", async ({ page }) => {
-  await page.goto("https://demo-store.local");
-  await page.getByRole("textbox", { name: "Email" }).fill("demo@test.com");
-  await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page.getByText("Dashboard")).toBeVisible();
+test("recorded workflow", async ({ page }) => {
+  await page.getByRole("button", { name: "New event" }).click();
+  await page.getByRole("textbox", { name: "Event title" }).click();
+  await page.getByRole("textbox", { name: "Event title" }).fill("Design review");
+  await page.getByRole("textbox", { name: "Start time" }).click();
+  await page.getByRole("textbox", { name: "Start time" }).fill("14:00");
+  await page.getByRole("button", { name: "Save event" }).click();
+  await expect(page.getByText("Event saved")).toBeVisible();
 });
 ```
 
@@ -219,7 +234,7 @@ python -m app.scripts.benchmark
 
 You can also use `GET /v1/benchmark` or the **Benchmark** tab in the dashboard.
 
-Bundled demo benchmark across 4 workflows and 3 drivers:
+[bundled demo data] Bundled demo benchmark across 4 workflows and 3 drivers. Provenance: `python -m app.scripts.benchmark`, captured in [artifacts/verification-api-benchmark.log](artifacts/verification-api-benchmark.log).
 
 | Driver | Task success | Mean step accuracy | Wrong clicks | Mean first divergence | Network-caused |
 | --- | --- | --- | --- | --- | --- |
