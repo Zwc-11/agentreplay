@@ -1,0 +1,168 @@
+
+> agentreplay@0.1.0 test
+> npm run test --workspaces --if-present && python -m pytest apps/api/tests
+
+
+> @agentreplay/web@0.1.0 test
+> vitest run --passWithNoTests
+
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mC:/AgentReplay/apps/web[39m
+
+[2minclude: [22m[33m**/*.{test,spec}.?(c|m)[jt]s?(x)[39m
+[2mexclude:  [22m[33m**/node_modules/**[2m, [22m**/dist/**[2m, [22m**/cypress/**[2m, [22m**/.{idea,git,cache,output,temp}/**[2m, [22m**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*[39m
+[2mwatch exclude:  [22m[33m**/node_modules/**[2m, [22m**/dist/**[39m
+No test files found, exiting with code 0
+
+
+> @agentreplay/eval-core@0.1.0 test
+> tsx --test test/*.test.ts
+
+TAP version 13
+# Subtest: divergent agent diverges at step 13 (wrong-element)
+ok 1 - divergent agent diverges at step 13 (wrong-element)
+  ---
+  duration_ms: 1.8393
+  type: 'test'
+  ...
+# Subtest: a 4xx/5xx near divergence is classified network-caused
+ok 2 - a 4xx/5xx near divergence is classified network-caused
+  ---
+  duration_ms: 0.2883
+  type: 'test'
+  ...
+# Subtest: matching paths -> no divergence, full accuracy
+ok 3 - matching paths -> no divergence, full accuracy
+  ---
+  duration_ms: 0.2056
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 343.3426
+
+> @agentreplay/graph-core@0.1.0 test
+> tsx --test test/*.test.ts
+
+TAP version 13
+# Subtest: compiles seed into 21 nodes and 16 human actions
+ok 1 - compiles seed into 21 nodes and 16 human actions
+  ---
+  duration_ms: 1.3284
+  type: 'test'
+  ...
+# Subtest: first state is Login, last node is an assertion
+ok 2 - first state is Login, last node is an assertion
+  ---
+  duration_ms: 0.5904
+  type: 'test'
+  ...
+# Subtest: normalize coalesces consecutive input bursts (final value kept)
+ok 3 - normalize coalesces consecutive input bursts (final value kept)
+  ---
+  duration_ms: 0.2398
+  type: 'test'
+  ...
+# Subtest: network events become dependency edges + nodes
+ok 4 - network events become dependency edges + nodes
+  ---
+  duration_ms: 0.1649
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 244.997
+
+> @agentreplay/playwright-generator@0.1.0 test
+> tsx --test test/*.test.ts
+
+TAP version 13
+# Subtest: generates runnable Playwright with role-based locators
+ok 1 - generates runnable Playwright with role-based locators
+  ---
+  duration_ms: 1.2777
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 270.1702
+
+> @agentreplay/recorder-sdk@0.1.0 test
+> tsx --test test/*.test.ts
+
+TAP version 13
+# Subtest: buildEvent stamps sessionId + stepIndex
+ok 1 - buildEvent stamps sessionId + stepIndex
+  ---
+  duration_ms: 0.6597
+  type: 'test'
+  ...
+# Subtest: capture auto-increments steps and flushes a full batch
+ok 2 - capture auto-increments steps and flushes a full batch
+  ---
+  duration_ms: 2.2408
+  type: 'test'
+  ...
+# Subtest: exportRecording includes flushed and pending events for import
+ok 3 - exportRecording includes flushed and pending events for import
+  ---
+  duration_ms: 1.3111
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 252.1756
+C:\Users\caesa\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (7.4.3)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\AgentReplay\apps\api
+configfile: pyproject.toml
+plugins: anyio-4.11.0, langsmith-0.7.36, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 43 items
+
+apps\api\tests\test_api.py ........                                      [ 18%]
+apps\api\tests\test_benchmark.py ....                                    [ 27%]
+apps\api\tests\test_compiler.py ....                                     [ 37%]
+apps\api\tests\test_deepseek.py .....                                    [ 48%]
+apps\api\tests\test_demo_script.py .                                     [ 51%]
+apps\api\tests\test_drivers.py ....                                      [ 60%]
+apps\api\tests\test_generator.py .                                       [ 62%]
+apps\api\tests\test_metrics.py .....                                     [ 74%]
+apps\api\tests\test_objects.py ...                                       [ 81%]
+apps\api\tests\test_pipeline.py ..                                       [ 86%]
+apps\api\tests\test_playwright.py ....                                   [ 95%]
+apps\api\tests\test_store.py .s                                          [100%]
+
+============================== warnings summary ===============================
+..\Users\caesa\AppData\Local\Programs\Python\Python313\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\caesa\AppData\Local\Programs\Python\Python313\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 42 passed, 1 skipped, 1 warning in 0.70s ===================

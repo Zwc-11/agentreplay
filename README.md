@@ -14,7 +14,7 @@
 ![Python](https://img.shields.io/badge/python-3.11%2B-3776ab)
 ![Node](https://img.shields.io/badge/node-20%2B-3c873a)
 
-[Architecture](docs/architecture.md) | [Event Schema](docs/event-schema.md) | [Workflow Graph](docs/workflow-graph.md) | [Evaluation](docs/evaluation.md) | [Deployment](docs/deployment.md) | [DeepSeek](docs/deepseek.md) | [Roadmap](PLAN.md)
+[Architecture](docs/architecture.md) | [Event Schema](docs/event-schema.md) | [Workflow Graph](docs/workflow-graph.md) | [Evaluation](docs/evaluation.md) | [Deployment](docs/deployment.md) | [DeepSeek](docs/deepseek.md) | [Roadmap](docs/dev/PLAN.md)
 
 </div>
 
@@ -39,12 +39,12 @@ Open:
 http://localhost:3000
 ```
 
-Prefer the terminal? Run the whole pipeline:
+Prefer the terminal? Run the calendar demo pipeline:
 
 ```bash
 cd apps/api
 pip install -e ".[dev]"
-python -m app.scripts.demo
+python -m app.scripts.demo calendar-demo
 ```
 
 Optional full-stack Docker path (requires Docker Desktop or another Docker engine running):

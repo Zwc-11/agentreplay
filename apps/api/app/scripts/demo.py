@@ -1,8 +1,9 @@
-"""Run the full AgentReplay pipeline against the seeded checkout workflow and
+"""Run the full AgentReplay pipeline against a seeded demo workflow and
 print a readable report.
 
 Usage:
     python -m app.scripts.demo               # divergent agent (default)
+    python -m app.scripts.demo calendar-demo # calendar workflow, divergent agent
     python -m app.scripts.demo scripted      # always-correct baseline
     python -m app.scripts.demo llm           # DeepSeek v4 Pro (needs DEEPSEEK_API_KEY)
 """
@@ -29,10 +30,23 @@ def _fmtd(c: dict) -> str:
 
 
 def main() -> None:
-    graph = state.seed()
+    state.seed()
+    workflow_id = state.WORKFLOW_ID
+    driver = os.getenv("DRIVER", "divergent")
+    args = sys.argv[1:]
+    if args:
+        if args[0] in state.RECORDINGS:
+            workflow_id = args[0]
+            if len(args) > 1:
+                driver = args[1]
+        else:
+            driver = args[0]
+
+    graph = state.store.get_graph(workflow_id)
+    if graph is None:
+        raise ValueError(f"unknown workflow: {workflow_id}")
     human = graph.human_commands()
-    driver = sys.argv[1] if len(sys.argv) > 1 else os.getenv("DRIVER", "divergent")
-    run = run_agent(state.store, state.WORKFLOW_ID, driver, goal="complete a checkout")
+    run = run_agent(state.store, workflow_id, driver, goal=state.goal_for_workflow(workflow_id))
     m, s = run["metrics"], run["summary"]
     div = m["divergence_step"]
 
@@ -40,7 +54,7 @@ def main() -> None:
     print(bar)
     print("AgentReplay - record -> compile -> run -> compare -> explain -> export")
     print(bar)
-    print(f"Workflow: {state.WORKFLOW_ID}   nodes={len(graph.nodes)}  human_actions={len(human)}")
+    print(f"Workflow: {workflow_id}   nodes={len(graph.nodes)}  human_actions={len(human)}")
     print(f"Driver: {driver}   DeepSeek enabled: {run.get('llmEnabled', False)}")
 
     print("\nHuman path:")

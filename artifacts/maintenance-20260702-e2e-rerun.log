@@ -1,0 +1,13 @@
+
+> agentreplay@0.1.0 test:e2e
+> playwright test
+
+
+Running 3 tests using 2 workers
+
+  -  1 tests\e2e\checkout.spec.ts:6:6 › checkout flow (superseded by dashboard.spec.ts)
+  ok 2 tests\e2e\dashboard.spec.ts:5:7 › AgentReplay dashboard › loads, renders the human-vs-agent workflow, and the metrics (3.0s)
+  ok 3 tests\e2e\dashboard.spec.ts:17:7 › AgentReplay dashboard › benchmark tab shows the per-driver table (2.5s)
+
+  1 skipped
+  2 passed (16.2s)

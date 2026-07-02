@@ -1,4 +1,4 @@
-# Issue: Implement XHR and WebSocket capture
+# Issue: XHR/WebSocket Capture Not Implemented
 
 Label: `enhancement`
 
