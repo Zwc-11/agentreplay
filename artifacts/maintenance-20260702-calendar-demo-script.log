@@ -1,0 +1,48 @@
+========================================================================
+AgentReplay - record -> compile -> run -> compare -> explain -> export
+========================================================================
+Workflow: calendar-demo   nodes=9  human_actions=7
+Driver: divergent   DeepSeek enabled: True
+
+Human path:
+   1. click         New event
+   2. click         Event title
+   3. fill          Event title = "Design review"
+   4. click         Start time
+   5. fill          Start time = "14:00"
+   6. click         Save event
+   7. assertVisible Event saved
+
+Agent path (driver = divergent):
+   1. click         New event
+   2. click         Event title
+   3. fill          Event title = "Design review"
+   4. click         Start time
+   5. fill          Start time = "14:00"
+   6. click         Special offer  <-- DIVERGES HERE
+
+First divergence : step 6 of 7
+Failure category : wrong-element
+Metrics          : success=False  step_accuracy=0.7143  wrong_clicks=1  recovered=False  replay_latency_ms=0
+
+AI summary (DeepSeek):
+  The agent clicked "Special offer" instead of "Save event" because it likely misidentified a visually similar or nearby promotional button, failing to distinguish the target action. To prevent this, implement exact text matching or use semantic selectors (e.g., `button:contains("Save event")`) and verify element purpose before clicking. (Step accuracy 71%, 1 wrong action(s); recovered: no.)
+
+Generated GitHub issue title:
+  Agent diverged at step 6 (wrong-element) in create a calendar event
+
+Generated Playwright test:
+
+import { test, expect } from "@playwright/test";
+
+test("create a calendar event", async ({ page }) => {
+  await page.getByRole("button", { name: "New event" }).click();
+  await page.getByRole("textbox", { name: "Event title" }).click();
+  await page.getByRole("textbox", { name: "Event title" }).fill("Design review");
+  await page.getByRole("textbox", { name: "Start time" }).click();
+  await page.getByRole("textbox", { name: "Start time" }).fill("14:00");
+  await page.getByRole("button", { name: "Save event" }).click();
+  await expect(page.getByText("Event saved")).toBeVisible();
+});
+
+========================================================================

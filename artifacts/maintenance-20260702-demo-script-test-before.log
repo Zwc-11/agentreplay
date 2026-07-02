@@ -1,0 +1,45 @@
+C:\Users\caesa\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (7.4.3)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+============================= test session starts =============================
+platform win32 -- Python 3.13.5, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\AgentReplay\apps\api
+configfile: pyproject.toml
+plugins: anyio-4.11.0, langsmith-0.7.36, asyncio-1.4.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+apps\api\tests\test_demo_script.py F                                     [100%]
+
+================================== FAILURES ===================================
+___________________ test_demo_script_runs_calendar_workflow ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000020D02386D70>
+capsys = <_pytest.capture.CaptureFixture object at 0x0000020D023F57F0>
+
+    def test_demo_script_runs_calendar_workflow(monkeypatch, capsys):
+        monkeypatch.setattr(sys, "argv", ["demo", "calendar-demo"])
+    
+>       demo.main()
+
+apps\api\tests\test_demo_script.py:9: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+apps\api\app\scripts\demo.py:35: in main
+    run = run_agent(state.store, state.WORKFLOW_ID, driver, goal="complete a checkout")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+apps\api\app\services\pipeline.py:50: in run_agent
+    result = get_driver(driver_name).run(task)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'calendar-demo'
+
+    def get_driver(name: str):
+        factory = DRIVERS.get(name)
+        if not factory:
+>           raise ValueError(f"unknown driver: {name}")
+E           ValueError: unknown driver: calendar-demo
+
+apps\api\app\adapters\playwright\drivers.py:161: ValueError
+=========================== short test summary info ===========================
+FAILED apps\api\tests\test_demo_script.py::test_demo_script_runs_calendar_workflow
+============================== 1 failed in 0.51s ==============================

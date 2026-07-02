@@ -1,0 +1,5 @@
+
+> agentreplay@0.1.0 lint
+> ruff check apps/api
+
+All checks passed!

@@ -1,0 +1,134 @@
+
+> @agentreplay/web@0.1.0 test
+> vitest run --passWithNoTests
+
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mC:/AgentReplay/apps/web[39m
+
+[2minclude: [22m[33m**/*.{test,spec}.?(c|m)[jt]s?(x)[39m
+[2mexclude:  [22m[33m**/node_modules/**[2m, [22m**/dist/**[2m, [22m**/cypress/**[2m, [22m**/.{idea,git,cache,output,temp}/**[2m, [22m**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*[39m
+[2mwatch exclude:  [22m[33m**/node_modules/**[2m, [22m**/dist/**[39m
+No test files found, exiting with code 0
+
+
+> @agentreplay/eval-core@0.1.0 test
+> tsx --test test/*.test.ts
+
+TAP version 13
+# Subtest: divergent agent diverges at step 13 (wrong-element)
+ok 1 - divergent agent diverges at step 13 (wrong-element)
+  ---
+  duration_ms: 3.5166
+  type: 'test'
+  ...
+# Subtest: a 4xx/5xx near divergence is classified network-caused
+ok 2 - a 4xx/5xx near divergence is classified network-caused
+  ---
+  duration_ms: 0.6796
+  type: 'test'
+  ...
+# Subtest: matching paths -> no divergence, full accuracy
+ok 3 - matching paths -> no divergence, full accuracy
+  ---
+  duration_ms: 0.3266
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 459.6067
+
+> @agentreplay/graph-core@0.1.0 test
+> tsx --test test/*.test.ts
+
+TAP version 13
+# Subtest: compiles seed into 21 nodes and 16 human actions
+ok 1 - compiles seed into 21 nodes and 16 human actions
+  ---
+  duration_ms: 3.1692
+  type: 'test'
+  ...
+# Subtest: first state is Login, last node is an assertion
+ok 2 - first state is Login, last node is an assertion
+  ---
+  duration_ms: 0.94
+  type: 'test'
+  ...
+# Subtest: normalize coalesces consecutive input bursts (final value kept)
+ok 3 - normalize coalesces consecutive input bursts (final value kept)
+  ---
+  duration_ms: 0.7398
+  type: 'test'
+  ...
+# Subtest: network events become dependency edges + nodes
+ok 4 - network events become dependency edges + nodes
+  ---
+  duration_ms: 0.5286
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 467.4202
+
+> @agentreplay/playwright-generator@0.1.0 test
+> tsx --test test/*.test.ts
+
+TAP version 13
+# Subtest: generates runnable Playwright with role-based locators
+ok 1 - generates runnable Playwright with role-based locators
+  ---
+  duration_ms: 1.5824
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 454.2951
+
+> @agentreplay/recorder-sdk@0.1.0 test
+> tsx --test test/*.test.ts
+
+TAP version 13
+# Subtest: buildEvent stamps sessionId + stepIndex
+ok 1 - buildEvent stamps sessionId + stepIndex
+  ---
+  duration_ms: 1.4104
+  type: 'test'
+  ...
+# Subtest: capture auto-increments steps and flushes a full batch
+ok 2 - capture auto-increments steps and flushes a full batch
+  ---
+  duration_ms: 3.7417
+  type: 'test'
+  ...
+# Subtest: exportRecording includes flushed and pending events for import
+ok 3 - exportRecording includes flushed and pending events for import
+  ---
+  duration_ms: 2.1236
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 438.3509
